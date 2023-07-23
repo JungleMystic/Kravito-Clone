@@ -1,6 +1,7 @@
 package com.lrm.kravito.fragments
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +30,7 @@ class OtpVerificationFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
     private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
+    private lateinit var resendTimer: CountDownTimer
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,6 +46,16 @@ class OtpVerificationFragment : Fragment() {
 
         auth = FirebaseAuth.getInstance()
 
+        resendTimer = object: CountDownTimer(60000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                binding.resendTimeCount.text = resources.getString(R.string.resend_time_count_text, (millisUntilFinished/1000))
+            }
+            override fun onFinish() {
+                binding.resendTimeCount.visibility = View.GONE
+                binding.resendOtpButton.visibility = View.VISIBLE
+            }
+        }
+
         callbacks = object: PhoneAuthProvider.OnVerificationStateChangedCallbacks(){
             override fun onVerificationCompleted(p0: PhoneAuthCredential) {
                 this@OtpVerificationFragment.findNavController().navigate(R.id.action_otpVerificationFragment_to_homeFragment)
@@ -51,13 +63,16 @@ class OtpVerificationFragment : Fragment() {
 
             override fun onVerificationFailed(p0: FirebaseException) {
                 p0.printStackTrace()
-                Log.e("MyLogMessages", "onVerificationFailed: ${p0.message}", )
+                Log.e("MyLogMessages", "onVerificationFailed: ${p0.message}")
                 Toast.makeText(requireContext(), "Login Failed, Try again...", Toast.LENGTH_SHORT).show()
             }
 
             override fun onCodeSent(verificationId: String, token: PhoneAuthProvider.ForceResendingToken) {
                 loginViewModel.setVerificationId(verificationId)
                 resendToken = token
+                binding.resendTimeCount.visibility = View.VISIBLE
+                resendTimer.start()
+                Toast.makeText(requireContext(), "OTP Sent", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -66,8 +81,13 @@ class OtpVerificationFragment : Fragment() {
         binding.backIcon.setOnClickListener { this.findNavController().navigateUp() }
 
         binding.phoneNumber.text = resources.getString(R.string.otp_phone_number, loginViewModel.phoneNumber.value)
-        binding.verifyOtp.setOnClickListener {
+        binding.verifyOtpButton.setOnClickListener {
             verifyOTP()
+        }
+
+        binding.resendOtpButton.setOnClickListener {
+            binding.resendOtpButton.visibility = View.INVISIBLE
+            resendVerificationCode("+91${loginViewModel.phoneNumber.value}")
         }
     }
 
@@ -78,6 +98,18 @@ class OtpVerificationFragment : Fragment() {
             .setTimeout(60L, TimeUnit.SECONDS)
             .setActivity(requireActivity())
             .setCallbacks(callbacks)
+            .build()
+
+        PhoneAuthProvider.verifyPhoneNumber(options)
+    }
+
+    private fun resendVerificationCode(phoneNumber: String) {
+        val options = PhoneAuthOptions.newBuilder(auth)
+            .setPhoneNumber(phoneNumber)
+            .setTimeout(60L, TimeUnit.SECONDS)
+            .setActivity(requireActivity())
+            .setCallbacks(callbacks)
+            .setForceResendingToken(resendToken)
             .build()
 
         PhoneAuthProvider.verifyPhoneNumber(options)
@@ -99,6 +131,7 @@ class OtpVerificationFragment : Fragment() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(requireActivity()){task ->
                 if (task.isSuccessful) {
+                    resendTimer.cancel()
                     Toast.makeText(requireContext(), "OTP Verified...", Toast.LENGTH_SHORT).show()
                     val action = OtpVerificationFragmentDirections.actionOtpVerificationFragmentToHomeFragment()
                     this@OtpVerificationFragment.findNavController().navigate(action)

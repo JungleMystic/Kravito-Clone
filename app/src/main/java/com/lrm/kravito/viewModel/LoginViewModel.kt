@@ -37,7 +37,7 @@ class LoginViewModel : ViewModel() {
                 && mobileNumPattern.matcher(phoneNumber).matches()
             ) {
                 if (termsCheckBox) {
-                    Toast.makeText(context, "OTP Sent", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Sending OTP", Toast.LENGTH_SHORT).show()
                     return true
                 } else {
                     Toast.makeText(context, "Agree to Terms and conditions to proceed", Toast.LENGTH_SHORT).show()

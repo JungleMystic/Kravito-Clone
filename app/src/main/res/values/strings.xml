@@ -15,4 +15,6 @@
     <string name="otp_phone_number">+91 %1$s</string>
     <string name="kravito_info_text">Kravito is here to serve your cravings and to give customer best service possible</string>
     <string name="verify_otp">Verify OTP</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="resend_time_count_text">Resend OTP in %1$d s</string>
 </resources>
