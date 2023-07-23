@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Kravito</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_phone_number_hint">Enter Phone Number <font color='#f9154a'>*</font></string>
+    <string name="country_code">+91</string>
+    <string name="login_head">Log in or Sign up</string>
+    <string name="continue_text">Continue</string>
+    <string name="terms_checkbox_text">I agree to the</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="and_text">and</string>
+    <string name="privacy_policy_text">Privacy Policy<font color=''>.</font></string>
+    <string name="otp_verification">OTP Verification</string>
+    <string name="otp_description">We have sent a verification code to</string>
+    <string name="otp_phone_number">+91 %1$s</string>
+    <string name="kravito_info_text">Kravito is here to serve your cravings and to give customer best service possible</string>
+    <string name="verify_otp">Verify OTP</string>
+</resources>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "142925259941",
+    "project_id": "kravito-7b3eb",
+    "storage_bucket": "kravito-7b3eb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:142925259941:android:09311b5d01637a59d7994c",
+        "android_client_info": {
+          "package_name": "com.lrm.kravito"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "142925259941-akqoot4epi4nq0bq9dtcp74qo8489eha.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaDZQ34nFGNTgI_e7CbFLtA6-7d4QFLAE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "142925259941-akqoot4epi4nq0bq9dtcp74qo8489eha.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
