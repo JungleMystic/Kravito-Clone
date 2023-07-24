@@ -17,4 +17,10 @@
     <string name="verify_otp">Verify OTP</string>
     <string name="resend_otp">Resend OTP</string>
     <string name="resend_time_count_text">Resend OTP in %1$d s</string>
+    <string name="sample_address">JNNRUM Colony, Boyapalem, Visakhapatnam, Andhra Pradhesh, India, 531163</string>
+    <string name="notifications">Notifications</string>
+    <string name="favourites">Favourites</string>
+    <string name="past_orders">Past Orders</string>
+    <string name="track_order">Track Order</string>
+    <string name="edit_profile">Edit Profile</string>
 </resources>

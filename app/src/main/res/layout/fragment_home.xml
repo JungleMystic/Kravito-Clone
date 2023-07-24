@@ -36,27 +36,32 @@
                     app:layout_constraintStart_toStartOf="parent"/>
 
                 <TextView
-                    android:id="@+id/app_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/app_name"
-                    android:textColor="@color/pink"
-                    android:textSize="24sp"
+                    android:id="@+id/location_text"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:text="@string/sample_address"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
                     android:textStyle="bold"
-                    android:fontFamily="@font/gothamrounded_bold"
-                    app:layout_constraintTop_toTopOf="@id/app_icon"
-                    app:layout_constraintBottom_toBottomOf="@id/app_icon"
+                    android:fontFamily="@font/text_font_regular"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/profile_icon"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="30dp"
                     app:layout_constraintStart_toEndOf="@id/app_icon" />
 
-                <ImageView
-                    android:id="@+id/log_out"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_logout_icon"
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_icon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/profile_user_icon"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginEnd="30dp"/>
+                    android:layout_marginEnd="20dp"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -72,6 +77,115 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:background="@color/pink"/>
+    
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/menu_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="50dp"
+        android:layout_marginEnd="30dp"
+        android:backgroundTint="@color/pink"
+        android:src="@drawable/ic_arrow_up_icon"
+        app:tint="@color/white"
+        android:importantForAccessibility="no"/>
+
+    <LinearLayout
+        android:id="@+id/notification_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/menu_fab"
+        app:layout_constraintBottom_toTopOf="@id/menu_fab"
+        android:visibility="invisible">
+
+        <TextView
+            android:id="@+id/notifications_tile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/notifications"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:fontFamily="@font/text_font_bold"
+            android:layout_gravity="center"
+            android:paddingBottom="10dp"
+            android:layout_marginEnd="20dp"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/notifications_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/pink"
+        android:src="@drawable/notification_icon"
+        app:tint="@color/white"
+        android:importantForAccessibility="no"
+        android:layout_marginBottom="10dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/favourites_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/menu_fab"
+        app:layout_constraintBottom_toTopOf="@id/notification_ll"
+        android:visibility="invisible">
+
+        <TextView
+            android:id="@+id/favourites_tile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/favourites"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:fontFamily="@font/text_font_bold"
+            android:layout_gravity="center"
+            android:layout_marginEnd="20dp"
+            android:paddingBottom="10dp"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/favourites_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/pink"
+            android:src="@drawable/ic_favourite_icon"
+            app:tint="@color/white"
+            android:importantForAccessibility="no"
+            android:layout_marginBottom="10dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/track_order_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/menu_fab"
+        app:layout_constraintBottom_toTopOf="@id/favourites_ll"
+        android:visibility="invisible">
+
+        <TextView
+            android:id="@+id/track_order_tile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/track_order"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:fontFamily="@font/text_font_bold"
+            android:layout_gravity="center"
+            android:layout_marginEnd="20dp"
+            android:paddingBottom="10dp"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/track_order_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/pink"
+            android:src="@drawable/track_food_icon"
+            app:tint="@color/white"
+            android:importantForAccessibility="no"
+            android:layout_marginBottom="10dp"/>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

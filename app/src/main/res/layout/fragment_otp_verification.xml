@@ -30,7 +30,7 @@
                     android:layout_width="50dp"
                     android:layout_height="30dp"
                     android:src="@drawable/ic_back_icon"
-                    app:tint="@color/light_grey"
+                    app:tint="@color/black"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"/>
@@ -38,14 +38,17 @@
                 <TextView
                     android:id="@+id/otp_verify_title"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:text="@string/otp_verification"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/gothamrounded_bold"
-                    app:layout_constraintTop_toTopOf="@id/back_icon"
-                    app:layout_constraintBottom_toBottomOf="@id/back_icon"
-                    app:layout_constraintStart_toEndOf="@id/back_icon" />
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/text_font_bold"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/back_icon"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="2dp"
+                    android:gravity="center_vertical"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
