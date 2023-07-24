@@ -1,13 +1,10 @@
 package com.lrm.kravito.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
-import com.lrm.kravito.R
-import com.lrm.kravito.databinding.FragmentFavouritesBinding
+import androidx.fragment.app.Fragment
 import com.lrm.kravito.databinding.FragmentProfileBinding
 
 class ProfileFragment : Fragment() {
