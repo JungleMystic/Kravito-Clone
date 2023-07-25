@@ -116,7 +116,8 @@
         app:itemWidth="40dp"
         app:itemHeight="50dp"
         android:cursorVisible="true"
-        app:hideLineWhenFilled="false"/>
+        app:hideLineWhenFilled="false"
+        android:enabled="false"/>
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/progress_bar"

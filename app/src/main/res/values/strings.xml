@@ -49,4 +49,6 @@
     <string name="enter_your_name_hint">Enter Your Name <font color='#f9154a'>*</font></string>
     <string name="enter_your_mail_hint">Enter Your Mail <font color='#f9154a'>*</font></string>
     <string name="update">Update</string>
+    <string name="set_dob"><![CDATA[Date of Birth ->]]></string>
+    <string name="date_format">DD/MM/YYY</string>
 </resources>

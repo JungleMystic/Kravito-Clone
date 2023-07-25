@@ -126,12 +126,52 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:id="@+id/set_date_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/set_dob"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/text_font_bold"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@id/date_picker"
+        app:layout_constraintBottom_toBottomOf="@id/date_picker"
+        app:layout_constraintStart_toStartOf="@id/profile_mail_til"/>
+
+    <ImageButton
+        android:id="@+id/date_picker"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/calendar_icon"
+        android:scaleType="centerCrop"
+        android:backgroundTint="@color/white"
+        android:importantForAccessibility="no"
+        app:layout_constraintStart_toEndOf="@id/set_date_head"
+        app:layout_constraintTop_toBottomOf="@id/profile_mail_til"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/dob_date"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:hint="@string/date_format"
+        android:fontFamily="@font/text_font_bold"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="@id/date_picker"
+        app:layout_constraintBottom_toBottomOf="@id/date_picker"
+        app:layout_constraintStart_toEndOf="@id/date_picker"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/tv_background"/>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/continue_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/profile_mail_til"
-        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/date_picker"
+        android:layout_marginTop="40dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
         android:backgroundTint="@color/pink"

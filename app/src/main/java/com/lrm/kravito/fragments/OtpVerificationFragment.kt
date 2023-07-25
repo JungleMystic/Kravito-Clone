@@ -1,14 +1,17 @@
 package com.lrm.kravito.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
@@ -19,6 +22,7 @@ import com.google.firebase.auth.PhoneAuthProvider
 import com.lrm.kravito.R
 import com.lrm.kravito.databinding.FragmentOtpVerificationBinding
 import com.lrm.kravito.viewModel.LoginViewModel
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
 class OtpVerificationFragment : Fragment() {
@@ -46,33 +50,43 @@ class OtpVerificationFragment : Fragment() {
 
         auth = FirebaseAuth.getInstance()
 
-        resendTimer = object: CountDownTimer(60000, 1000) {
+        resendTimer = object : CountDownTimer(60000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                binding.resendTimeCount.text = resources.getString(R.string.resend_time_count_text, (millisUntilFinished/1000))
+                binding.resendTimeCount.text = resources.getString(
+                    R.string.resend_time_count_text,
+                    (millisUntilFinished / 1000)
+                )
             }
+
             override fun onFinish() {
                 binding.resendTimeCount.visibility = View.GONE
                 binding.resendOtpButton.visibility = View.VISIBLE
+                hideSoftKeyboard()
             }
         }
 
-        callbacks = object: PhoneAuthProvider.OnVerificationStateChangedCallbacks(){
+        callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(p0: PhoneAuthCredential) {
-                this@OtpVerificationFragment.findNavController().navigate(R.id.action_otpVerificationFragment_to_homeFragment)
+
             }
 
             override fun onVerificationFailed(p0: FirebaseException) {
                 p0.printStackTrace()
                 Log.e("MyLogMessages", "onVerificationFailed: ${p0.message}")
-                Toast.makeText(requireContext(), "Login Failed, Try again...", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Login Failed, Try again...", Toast.LENGTH_SHORT)
+                    .show()
             }
 
-            override fun onCodeSent(verificationId: String, token: PhoneAuthProvider.ForceResendingToken) {
+            override fun onCodeSent(
+                verificationId: String,
+                token: PhoneAuthProvider.ForceResendingToken
+            ) {
                 loginViewModel.setVerificationId(verificationId)
                 resendToken = token
                 binding.resendTimeCount.visibility = View.VISIBLE
                 resendTimer.start()
                 Toast.makeText(requireContext(), "OTP Sent", Toast.LENGTH_SHORT).show()
+                binding.otpNumPinView.isEnabled = true
             }
         }
 
@@ -80,7 +94,8 @@ class OtpVerificationFragment : Fragment() {
 
         binding.backIcon.setOnClickListener { this.findNavController().navigateUp() }
 
-        binding.phoneNumber.text = resources.getString(R.string.otp_phone_number, loginViewModel.phoneNumber.value)
+        binding.phoneNumber.text =
+            resources.getString(R.string.otp_phone_number, loginViewModel.phoneNumber.value)
         binding.verifyOtpButton.setOnClickListener {
             verifyOTP()
         }
@@ -89,6 +104,24 @@ class OtpVerificationFragment : Fragment() {
             binding.resendOtpButton.visibility = View.INVISIBLE
             resendVerificationCode("+91${loginViewModel.phoneNumber.value}")
         }
+    }
+
+    private fun checkUserInFirestore() {
+
+        val currentUserPhone = auth.currentUser?.phoneNumber
+        val currentUserUid = auth.currentUser?.uid
+
+        Log.i("MyLogMessages", "checkUser: $currentUserPhone")
+        Log.i("MyLogMessages", "checkUser: $currentUserUid")
+
+        lifecycleScope.launch {
+            if (currentUserPhone != null) {
+                if (currentUserUid != null) {
+                    loginViewModel.checkUserInFirestore(requireContext(), currentUserPhone, currentUserUid)
+                }
+            }
+        }
+
     }
 
 
@@ -116,6 +149,7 @@ class OtpVerificationFragment : Fragment() {
     }
 
     private fun verifyOTP() {
+        hideSoftKeyboard()
         val verificationId = loginViewModel.verificationId.value!!
         val otpEntered = binding.otpNumPinView.text.toString()
 
@@ -131,12 +165,15 @@ class OtpVerificationFragment : Fragment() {
 
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
         auth.signInWithCredential(credential)
-            .addOnCompleteListener(requireActivity()){task ->
+            .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     resendTimer.cancel()
-                    Toast.makeText(requireContext(), "OTP Verified...", Toast.LENGTH_SHORT).show()
-                    val action = OtpVerificationFragmentDirections.actionOtpVerificationFragmentToHomeFragment()
+                    val action =
+                        OtpVerificationFragmentDirections.actionOtpVerificationFragmentToHomeFragment()
                     this@OtpVerificationFragment.findNavController().navigate(action)
+
+                    checkUserInFirestore()
+
                 } else if (task.exception is FirebaseAuthInvalidCredentialsException) {
                     binding.progressBar.visibility = View.INVISIBLE
                     Toast.makeText(requireContext(), "Invalid OTP...", Toast.LENGTH_SHORT).show()
@@ -144,8 +181,15 @@ class OtpVerificationFragment : Fragment() {
             }
     }
 
+    private fun hideSoftKeyboard() {
+        val inputManager =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, 0)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
+        resendTimer.cancel()
         _binding = null
     }
 }
