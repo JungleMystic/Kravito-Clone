@@ -122,7 +122,9 @@ class OtpVerificationFragment : Fragment() {
         if (otpEntered.isNotEmpty() && otpEntered.length == 6) {
             val credential = PhoneAuthProvider.getCredential(verificationId, otpEntered)
             signInWithPhoneAuthCredential(credential)
+            binding.progressBar.visibility = View.VISIBLE
         } else {
+            binding.progressBar.visibility = View.INVISIBLE
             Toast.makeText(requireContext(), "Enter valid OTP...", Toast.LENGTH_SHORT).show()
         }
     }
@@ -136,6 +138,7 @@ class OtpVerificationFragment : Fragment() {
                     val action = OtpVerificationFragmentDirections.actionOtpVerificationFragmentToHomeFragment()
                     this@OtpVerificationFragment.findNavController().navigate(action)
                 } else if (task.exception is FirebaseAuthInvalidCredentialsException) {
+                    binding.progressBar.visibility = View.INVISIBLE
                     Toast.makeText(requireContext(), "Invalid OTP...", Toast.LENGTH_SHORT).show()
                 }
             }

@@ -118,6 +118,17 @@
         android:cursorVisible="true"
         app:hideLineWhenFilled="false"/>
 
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progress_bar"
+        android:layout_width="20dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toTopOf="@id/verify_otp_button"
+        app:layout_constraintEnd_toEndOf="@id/verify_otp_button"
+        android:indeterminate="true"
+        app:indicatorColor="@color/pink"
+        app:trackColor="@color/white"
+        android:visibility="invisible"/>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/verify_otp_button"
         android:layout_width="match_parent"

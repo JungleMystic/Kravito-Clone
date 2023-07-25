@@ -102,7 +102,11 @@ dependencies {
 
     // Add the dependency for the Firebase Authentication library
     // When using the BoM, you don't specify versions in Firebase library dependencies
+    //Firebase Authentication
     implementation("com.google.firebase:firebase-auth-ktx")
+
+    // Firebase Cloud Firestore
+    implementation 'com.google.firebase:firebase-firestore-ktx'
 
     // Google play Integrity API
     implementation 'com.google.android.play:integrity:1.1.0'

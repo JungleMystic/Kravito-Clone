@@ -55,8 +55,8 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_icon"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:src="@drawable/profile_user_icon"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -97,7 +97,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@id/menu_fab"
         app:layout_constraintBottom_toTopOf="@id/menu_fab"
-        android:visibility="invisible">
+        android:visibility="invisible"
+        tools:visibility="visible">
 
         <TextView
             android:id="@+id/notifications_tile"
@@ -105,11 +106,11 @@
             android:layout_height="wrap_content"
             android:text="@string/notifications"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:fontFamily="@font/text_font_bold"
             android:layout_gravity="center"
             android:paddingBottom="10dp"
-            android:layout_marginEnd="20dp"/>
+            android:layout_marginEnd="10dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/notifications_fab"
@@ -119,7 +120,9 @@
         android:src="@drawable/notification_icon"
         app:tint="@color/white"
         android:importantForAccessibility="no"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:scaleX="0.8"
+        android:scaleY="0.8"/>
 
     </LinearLayout>
 
@@ -129,7 +132,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@id/menu_fab"
         app:layout_constraintBottom_toTopOf="@id/notification_ll"
-        android:visibility="invisible">
+        android:visibility="invisible"
+        tools:visibility="visible">
 
         <TextView
             android:id="@+id/favourites_tile"
@@ -137,10 +141,10 @@
             android:layout_height="wrap_content"
             android:text="@string/favourites"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:fontFamily="@font/text_font_bold"
             android:layout_gravity="center"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="10dp"
             android:paddingBottom="10dp"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -151,7 +155,9 @@
             android:src="@drawable/ic_favourite_icon"
             app:tint="@color/white"
             android:importantForAccessibility="no"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+            android:scaleX="0.8"
+            android:scaleY="0.8"/>
 
     </LinearLayout>
 
@@ -161,7 +167,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@id/menu_fab"
         app:layout_constraintBottom_toTopOf="@id/favourites_ll"
-        android:visibility="invisible">
+        android:visibility="invisible"
+        tools:visibility="visible">
 
         <TextView
             android:id="@+id/track_order_tile"
@@ -169,10 +176,10 @@
             android:layout_height="wrap_content"
             android:text="@string/track_order"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:fontFamily="@font/text_font_bold"
             android:layout_gravity="center"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="10dp"
             android:paddingBottom="10dp"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -183,7 +190,9 @@
             android:src="@drawable/track_food_icon"
             app:tint="@color/white"
             android:importantForAccessibility="no"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+            android:scaleX="0.8"
+            android:scaleY="0.8"/>
 
     </LinearLayout>
 

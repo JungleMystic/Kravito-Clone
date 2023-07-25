@@ -9,7 +9,7 @@
     <string name="terms_checkbox_text">I agree to the</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="and_text">and</string>
-    <string name="privacy_policy_text">Privacy Policy<font color=''>.</font></string>
+    <string name="privacy_policy_text">Privacy Policy</string>
     <string name="otp_verification">OTP Verification</string>
     <string name="otp_description">We have sent a verification code to</string>
     <string name="otp_phone_number">+91 %1$s</string>
@@ -23,4 +23,30 @@
     <string name="past_orders">Past Orders</string>
     <string name="track_order">Track Order</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="my_account">My Account</string>
+    <string name="your_orders">Your Orders</string>
+    <string name="favourite_orders">Favourite Orders</string>
+    <string name="address_book">Address Book</string>
+    <string name="your_name">Your Name</string>
+    <string name="your_mobile_number">Your Mobile Number</string>
+    <string name="your_dob">Your DOB</string>
+    <string name="your_email">Your Email</string>
+    <string name="offers">Offers</string>
+    <string name="your_account">Your Account</string>
+    <string name="about_us">About Us</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="return_cancellation_policy">Return &amp; Cancellation Policy</string>
+    <string name="rate_us_text">Rate us on Play Store</string>
+    <string name="help_support"><![CDATA[Help & Support]]></string>
+    <string name="email_us">Email Us</string>
+    <string name="app_version">App Version</string>
+    <string name="log_out">Log Out</string>
+    <string name="log_out_message">Are you sure you want to Log Out…?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="app_version_num_sample">v1.0.1</string>
+    <string name="call_us">Call Us</string>
+    <string name="enter_your_name_hint">Enter Your Name <font color='#f9154a'>*</font></string>
+    <string name="enter_your_mail_hint">Enter Your Mail <font color='#f9154a'>*</font></string>
+    <string name="update">Update</string>
 </resources>

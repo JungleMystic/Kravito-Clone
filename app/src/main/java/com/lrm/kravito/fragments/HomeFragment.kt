@@ -89,6 +89,7 @@ class HomeFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        isExpanded = false
         _binding = null
     }
 }
