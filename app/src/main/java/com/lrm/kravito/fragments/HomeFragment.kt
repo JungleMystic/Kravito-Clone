@@ -1,15 +1,21 @@
 package com.lrm.kravito.fragments
 
+import android.Manifest
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.lrm.kravito.R
 import com.lrm.kravito.databinding.FragmentHomeBinding
+import com.lrm.kravito.utils.PermissionCodes
+import com.lrm.kravito.viewModel.ProfileViewModel
+import com.vmadalin.easypermissions.EasyPermissions
 
 class HomeFragment : Fragment() {
 
@@ -30,6 +36,8 @@ class HomeFragment : Fragment() {
         AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_anti_clock_wise)
     }
 
+    private val profileViewModel: ProfileViewModel by activityViewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,6 +50,25 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (profileViewModel.userProfile.value == null) {
+            Log.i(
+                "MyLogMessages",
+                "HomeFragment: userProfile ${profileViewModel.userProfile.value}"
+            )
+            Log.i("MyLogMessages", "HomeFragment: getUserProfile is called")
+            profileViewModel.getUserProfile()
+        }
+
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (!hasNotificationPermission()) {
+                requestNotificationPermission()
+            }
+        }
+
+        if (!hasLocationPermission()) {
+            requestLocationPermission()
+        }*/
+
         binding.menuFab.setOnClickListener {
             if (isExpanded) {
                 shrinkFabMenu()
@@ -50,7 +77,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-        binding.profileIcon.setOnClickListener{
+        binding.profileIcon.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToProfileFragment()
             this.findNavController().navigate(action)
         }
@@ -85,6 +112,39 @@ class HomeFragment : Fragment() {
         binding.notificationLl.startAnimation(fabDown)
         binding.favouritesLl.startAnimation(fabDown)
         binding.trackOrderLl.startAnimation(fabDown)
+    }
+
+    private fun hasNotificationPermission(): Boolean {
+        return EasyPermissions.hasPermissions(
+            requireContext(), Manifest.permission.POST_NOTIFICATIONS
+        )
+    }
+
+    private fun hasLocationPermission(): Boolean {
+        return EasyPermissions.hasPermissions(
+            requireContext(),
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+    }
+
+    private fun requestNotificationPermission() {
+        EasyPermissions.requestPermissions(
+            this,
+            "Permission is required to get notifications",
+            PermissionCodes.NOTIFICATION_PERMISSION_CODE,
+            Manifest.permission.POST_NOTIFICATIONS
+        )
+    }
+
+    private fun requestLocationPermission() {
+        EasyPermissions.requestPermissions(
+            this,
+            "Permission is required to get the location",
+            PermissionCodes.LOCATION_PERMISSION_CODE,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
     }
 
     override fun onDestroyView() {

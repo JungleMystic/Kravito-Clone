@@ -34,7 +34,8 @@
                     app:tint="@color/black"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:contentDescription="@null"/>
 
                 <TextView
                     android:id="@+id/fragment_label"
@@ -66,16 +67,25 @@
         android:layout_marginEnd="20dp"
         android:background="@color/pink"/>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/app_bar"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:src="@drawable/profile_user_icon"
-        app:layout_constraintTop_toBottomOf="@id/app_bar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="20dp"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/profile_name_til"
@@ -89,7 +99,9 @@
         app:boxStrokeWidth="1dp"
         android:hint="@string/enter_your_name_hint"
         app:hintTextColor="@color/black"
-        app:endIconMode="clear_text">
+        app:endIconMode="clear_text"
+        app:counterEnabled="true"
+        app:counterMaxLength="20">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/profile_name"
@@ -109,7 +121,7 @@
         app:layout_constraintTop_toBottomOf="@id/profile_name_til"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         app:boxStrokeColor="@color/pink"
         app:boxStrokeWidth="1dp"
         android:hint="@string/enter_your_mail_hint"
@@ -166,17 +178,62 @@
         android:layout_marginStart="10dp"
         android:background="@drawable/tv_background"/>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/continue_button"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/profile_number_til"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/date_picker"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="20dp"
+        app:boxStrokeColor="@color/pink"
+        app:boxStrokeWidth="1dp"
+        android:hint="@string/phone_number"
+        app:hintTextColor="@color/black">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/profile_number"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:textColor="@color/black"
+            android:fontFamily="@font/text_font_bold"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:cursorVisible="false"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/update_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/profile_number_til"
         android:layout_marginTop="40dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
         android:backgroundTint="@color/pink"
         android:text="@string/update"
         android:textColor="@color/white"/>
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progress_bar"
+        android:layout_width="20dp"
+        android:layout_height="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/update_button"
+        android:layout_marginTop="20dp"
+        android:indeterminate="true"
+        app:indicatorColor="@color/pink"
+        app:trackColor="@color/white"
+        android:visibility="invisible"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

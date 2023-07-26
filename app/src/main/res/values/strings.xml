@@ -46,9 +46,12 @@
     <string name="no">No</string>
     <string name="app_version_num_sample">v1.0.1</string>
     <string name="call_us">Call Us</string>
-    <string name="enter_your_name_hint">Enter Your Name <font color='#f9154a'>*</font></string>
-    <string name="enter_your_mail_hint">Enter Your Mail <font color='#f9154a'>*</font></string>
+    <string name="enter_your_name_hint">Your Name <font color='#f9154a'>*</font></string>
+    <string name="enter_your_mail_hint">Your Mail <font color='#f9154a'>*</font></string>
     <string name="update">Update</string>
-    <string name="set_dob"><![CDATA[Date of Birth ->]]></string>
+    <string name="set_dob">Date of Birth -></string>
     <string name="date_format">DD/MM/YYY</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="profile">Profile</string>
+    <string name="loading_location">Loading Location...</string>
 </resources>

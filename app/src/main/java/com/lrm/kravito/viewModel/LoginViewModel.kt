@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.lrm.kravito.constants.USER_NUMBER
-import com.lrm.kravito.constants.USER_UID
+import com.lrm.kravito.constants.USERS_COLLECTION
+import com.lrm.kravito.model.User
 import java.util.regex.Pattern
 
 class LoginViewModel : ViewModel() {
@@ -36,7 +36,7 @@ class LoginViewModel : ViewModel() {
     ): Boolean {
         val mobileNumPattern = Pattern.compile("[6-9][0-9]{9}")
 
-        if (phoneNumber.isNotEmpty()){
+        if (phoneNumber.isNotEmpty()) {
             if (phoneNumber.length == 10
                 && mobileNumPattern.matcher(phoneNumber).matches()
             ) {
@@ -44,11 +44,16 @@ class LoginViewModel : ViewModel() {
                     Toast.makeText(context, "Sending OTP", Toast.LENGTH_SHORT).show()
                     return true
                 } else {
-                    Toast.makeText(context, "Agree to Terms and conditions to proceed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        "Agree to Terms and conditions to proceed",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     return false
                 }
             } else {
-                Toast.makeText(context, "Please enter valid phone number", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Please enter valid phone number", Toast.LENGTH_SHORT)
+                    .show()
                 return false
             }
         } else {
@@ -61,22 +66,33 @@ class LoginViewModel : ViewModel() {
 
         val db = Firebase.firestore
 
-        db.collection("users").document(phoneNumber).get()
+        db.collection(USERS_COLLECTION).document(phoneNumber).get()
             .addOnSuccessListener { result ->
                 if (result.exists()) {
-                    Toast.makeText(context, "Welcome back...", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Welcome back...", Toast.LENGTH_LONG).show()
                 } else {
-                    val user = hashMapOf(
-                        USER_NUMBER to phoneNumber,
-                        USER_UID to userUid
+                    val user = User(
+                        "Your Name",
+                        "Your Mail ID",
+                        phoneNumber,
+                        "",
+                        userUid,
+                        "DD/MM/YYYY"
                     )
 
-                    db.collection("users").document(phoneNumber).set(user)
+                    db.collection(USERS_COLLECTION).document(phoneNumber).set(user)
                         .addOnSuccessListener {
                             Toast.makeText(
                                 context,
                                 "Welcome to Kravito...",
                                 Toast.LENGTH_LONG
+                            ).show()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(
+                                context,
+                                "An error occurred...",
+                                Toast.LENGTH_SHORT
                             ).show()
                         }
                 }

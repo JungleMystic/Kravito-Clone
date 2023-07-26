@@ -3,13 +3,16 @@ package com.lrm.kravito.fragments
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.lrm.kravito.R
@@ -18,11 +21,15 @@ import com.lrm.kravito.constants.PRIVACY_POLICY_URI
 import com.lrm.kravito.constants.RETURN_AND_CANCELLATION_POLICY
 import com.lrm.kravito.constants.TERMS_AND_CONDITIONS_URI
 import com.lrm.kravito.databinding.FragmentProfileBinding
+import com.lrm.kravito.model.User
+import com.lrm.kravito.viewModel.ProfileViewModel
 
 class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
+
+    private val profileViewModel: ProfileViewModel by activityViewModels()
 
     private lateinit var auth: FirebaseAuth
 
@@ -52,7 +59,16 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.backIcon.setOnClickListener { this.findNavController().navigateUp() }
+
         auth = FirebaseAuth.getInstance()
+
+        val userProfile = profileViewModel.userProfile.value
+
+        if(userProfile != null) {
+            Log.i("MyLogMessages", "ProfileFragment: UserProfile $userProfile")
+            bind(userProfile)
+        }
 
         binding.tosCv.setOnClickListener { expandTos() }
 
@@ -69,6 +85,22 @@ class ProfileFragment : Fragment() {
         binding.rateAppCv.setOnClickListener { openPlayStore() }
 
         binding.logOutCv.setOnClickListener { showLogOutDialog() }
+    }
+
+    private fun bind(userProfile: User){
+        binding.profileName.text = userProfile.profileName
+        binding.profileDob.text = userProfile.profileDob
+        binding.profileMail.text = userProfile.profileMail
+        binding.profileMobile.text = userProfile.phoneNumber
+
+        if (userProfile.profilePic == "") {
+            binding.profilePic.setImageResource(R.drawable.profile_user_icon)
+        } else {
+            Glide.with(this@ProfileFragment)
+                .load(userProfile.profilePic)
+                .placeholder(R.drawable.profile_user_icon)
+                .into(binding.profilePic)
+        }
     }
 
     private fun expandHelpSupport() {
@@ -117,6 +149,8 @@ class ProfileFragment : Fragment() {
     }
 
     private fun logOut() {
+        profileViewModel.setUserProfile(null)
+        Log.i("MyLogMessages", "ProfileFragment: After SignOut ${profileViewModel.userProfile.value}")
         auth.signOut()
         val action = ProfileFragmentDirections.actionProfileFragmentToLoginFragment()
         this.findNavController().navigate(action)

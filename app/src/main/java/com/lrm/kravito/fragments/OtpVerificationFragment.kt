@@ -121,7 +121,6 @@ class OtpVerificationFragment : Fragment() {
                 }
             }
         }
-
     }
 
     private fun sendVerificationCode(phoneNumber: String) {

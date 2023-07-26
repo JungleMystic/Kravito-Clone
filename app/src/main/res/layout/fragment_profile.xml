@@ -8,14 +8,61 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ProfileFragment">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/white">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/back_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_back_icon"
+                    app:tint="@color/black"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/otp_verify_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:text="@string/profile"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/text_font_bold"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/back_icon"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="2dp"
+                    android:gravity="center_vertical"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_pic"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:src="@drawable/profile_user_icon"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_bar"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="30dp"
         android:layout_marginStart="20dp"/>
 
     <TextView
@@ -57,7 +104,7 @@
         android:fontFamily="@font/text_font_regular"
         android:textStyle="bold"
         android:textColor="@color/black"
-        android:textSize="12sp"
+        android:textSize="15sp"
         android:maxLines="1"
         app:layout_constraintStart_toStartOf="@id/profile_name"
         app:layout_constraintTop_toTopOf="@id/cake_icon"
@@ -67,7 +114,7 @@
         android:id="@+id/profile_dob"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        tools:text="21/08/1998"
+        tools:text="DD/MM/YYYY"
         android:fontFamily="@font/text_font_regular"
         android:text="@string/your_dob"
         android:textStyle="bold"
@@ -88,7 +135,10 @@
             android:fontFamily="@font/text_font_regular"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="12sp"
+            android:textSize="15sp"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:ellipsize="end"
             app:layout_constraintStart_toStartOf="@id/profile_name"
             app:layout_constraintTop_toBottomOf="@id/cake_icon"
             app:layout_constraintEnd_toEndOf="parent"
