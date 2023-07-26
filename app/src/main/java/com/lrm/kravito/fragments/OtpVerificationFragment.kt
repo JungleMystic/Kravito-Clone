@@ -124,7 +124,6 @@ class OtpVerificationFragment : Fragment() {
 
     }
 
-
     private fun sendVerificationCode(phoneNumber: String) {
         val options = PhoneAuthOptions.newBuilder(auth)
             .setPhoneNumber(phoneNumber)
