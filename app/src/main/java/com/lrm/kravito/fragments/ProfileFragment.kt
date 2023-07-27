@@ -68,11 +68,11 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
         auth = FirebaseAuth.getInstance()
 
-        val userProfile = profileViewModel.userProfile.value
-
-        if(userProfile != null) {
-            Log.i("MyLogMessages", "ProfileFragment: UserProfile $userProfile")
-            bind(userProfile)
+        profileViewModel.userProfile.observe(viewLifecycleOwner) {userProfile ->
+            Log.i("MyLogMessages", "ProfileFragment: LiveData Observer $userProfile")
+            if (userProfile != null) {
+                bind(userProfile)
+            }
         }
 
         binding.tosCv.setOnClickListener { expandTos() }
@@ -91,7 +91,7 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
         binding.callSupport.setOnClickListener {
             if (hasPermission()) {
-                makeCall("8008308770")
+                makeCall()
             } else {
                 requestPermission()
             }
@@ -100,9 +100,9 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         binding.logOutCv.setOnClickListener { showLogOutDialog() }
     }
 
-    private fun makeCall(phoneNumber: String) {
+    private fun makeCall() {
         val intent = Intent(Intent.ACTION_CALL)
-        intent.data = Uri.parse("tel:$phoneNumber")
+        intent.data = Uri.parse("tel:8008308770")
         startActivity(intent)
     }
 

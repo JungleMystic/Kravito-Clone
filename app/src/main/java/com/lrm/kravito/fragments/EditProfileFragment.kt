@@ -1,6 +1,8 @@
 package com.lrm.kravito.fragments
 
+import android.Manifest
 import android.app.DatePickerDialog
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,31 +10,46 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.lrm.kravito.R
 import com.lrm.kravito.constants.USERS_COLLECTION
 import com.lrm.kravito.databinding.FragmentEditProfileBinding
 import com.lrm.kravito.model.User
+import com.lrm.kravito.utils.PermissionCodes
 import com.lrm.kravito.viewModel.ProfileViewModel
-import kotlinx.coroutines.launch
+import com.vmadalin.easypermissions.EasyPermissions
+import com.vmadalin.easypermissions.dialogs.SettingsDialog
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class EditProfileFragment : Fragment() {
+class EditProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     private var _binding: FragmentEditProfileBinding? = null
     private val binding get() = _binding!!
 
     private val profileViewModel: ProfileViewModel by activityViewModels()
 
-    private lateinit var userProfile: User
+    private lateinit var filePath: Uri
+    private lateinit var storageRef: StorageReference
+    private val contract = registerForActivityResult(ActivityResultContracts.GetContent()) {
+        if (it != null) {
+            filePath = it
+            Log.i("MyLogMessages", "EditProfileFragment: File path-> $filePath")
+            binding.profileImage.setImageURI(filePath)
+        } else {
+            filePath = Uri.EMPTY
+            binding.profileImage.setImageResource(R.drawable.profile_user_icon)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,11 +65,22 @@ class EditProfileFragment : Fragment() {
 
         binding.backIcon.setOnClickListener { this.findNavController().navigateUp() }
 
-        userProfile = profileViewModel.userProfile.value!!
-        Log.i("MyLogMessages", "EditProfileFragment: UserProfile $userProfile")
-        bind(userProfile)
+        profileViewModel.userProfile.observe(viewLifecycleOwner) { userProfile ->
+            Log.i("MyLogMessages", "EditProfileFragment: LiveData Observer $userProfile")
+            if (userProfile != null) {
+                bind(userProfile)
+            }
+        }
 
-        binding.datePicker.setOnClickListener { showDatePicker()}
+        binding.profileImage.setOnClickListener {
+            if (hasPermission()) {
+                pickImageFromGallery()
+            } else {
+                requestPermission()
+            }
+        }
+
+        binding.datePicker.setOnClickListener { showDatePicker() }
 
         binding.updateButton.setOnClickListener {
             binding.progressBar.visibility = View.VISIBLE
@@ -60,8 +88,11 @@ class EditProfileFragment : Fragment() {
         }
     }
 
-    private fun showDatePicker() {
+    private fun pickImageFromGallery() {
+        contract.launch("image/*")
+    }
 
+    private fun showDatePicker() {
         val calendar = Calendar.getInstance()
         val currentYear = calendar.get(Calendar.YEAR)
         val currentMonth = calendar.get(Calendar.MONTH)
@@ -73,8 +104,8 @@ class EditProfileFragment : Fragment() {
             { _, dob_year, dob_month, dob_day ->
                 calendar.set(dob_year, dob_month, dob_day)
                 binding.dobDate.text = sdf.format(calendar.timeInMillis)
-            }
-            , currentYear, currentMonth, currentDay)
+            }, currentYear, currentMonth, currentDay
+        )
 
         datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
         datePickerDialog.show()
@@ -85,12 +116,31 @@ class EditProfileFragment : Fragment() {
         val profileMail = binding.profileMail.text.toString()
         val profileDob = binding.dobDate.text.toString()
 
-        lifecycleScope.launch {
-            uploadDataToFirestore(
-                profileName, profileMail, profileDob
-            )
+        val phoneNumber = profileViewModel.userProfile.value?.phoneNumber
+        var profilePic = ""
 
-            profileViewModel.getUserProfile()
+        storageRef = FirebaseStorage.getInstance().reference
+
+        if (filePath != Uri.EMPTY) {
+            val reference = storageRef.child("profilePics/$phoneNumber")
+
+            reference.putFile(filePath)
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        reference.downloadUrl.addOnSuccessListener { task ->
+                            profilePic = task.toString()
+                            uploadDataToFirestore(profileName, profileMail, profileDob, profilePic)
+                        }
+                    }
+                }
+                .addOnFailureListener{
+                    Toast.makeText(requireContext(), "Image Upload failed", Toast.LENGTH_SHORT).show()
+                    profilePic = ""
+                    uploadDataToFirestore(profileName, profileMail, profileDob, profilePic)
+                }
+        } else if (filePath == Uri.EMPTY) {
+            profilePic = ""
+            uploadDataToFirestore(profileName, profileMail, profileDob, profilePic)
         }
     }
 
@@ -112,9 +162,11 @@ class EditProfileFragment : Fragment() {
 
     private fun uploadDataToFirestore(
         profileName: String,
-        profileMail:String,
-        profileDob:String
+        profileMail: String,
+        profileDob: String,
+        profilePicUrl: String
     ) {
+        val phoneNumber = profileViewModel.userProfile.value?.phoneNumber
         val db = Firebase.firestore
 
         if (profileName.isEmpty() && profileMail.isEmpty() && profileDob.isEmpty()) {
@@ -123,22 +175,67 @@ class EditProfileFragment : Fragment() {
             val userData = User(
                 profileName,
                 profileMail,
-                userProfile.phoneNumber,
-                "",
+                phoneNumber!!,
+                profilePicUrl,
                 profileViewModel.currentUserUid,
                 profileDob
             )
 
-            db.collection(USERS_COLLECTION).document(userProfile.phoneNumber).set(userData)
+            db.collection(USERS_COLLECTION).document(phoneNumber).set(userData)
                 .addOnSuccessListener {
                     binding.progressBar.visibility = View.INVISIBLE
-                    Toast.makeText(requireContext(), "Profile updated successfully...", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Profile updated successfully...",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    profileViewModel.getUserProfile()
                     this@EditProfileFragment.findNavController().navigateUp()
                 }
                 .addOnFailureListener {
-                    Toast.makeText(requireContext(), "An error occurred while updating profile", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "An error occurred while updating profile",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
         }
+    }
+
+    private fun hasPermission(): Boolean {
+        return EasyPermissions.hasPermissions(
+            requireContext(),
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
+    }
+
+    private fun requestPermission() {
+        EasyPermissions.requestPermissions(
+            this,
+            "Permission is required to upload profile photo",
+            PermissionCodes.READ_EXTERNAL_STORAGE_PERMISSION_CODE,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {
+        if (EasyPermissions.permissionPermanentlyDenied(this, perms.first())) {
+            SettingsDialog.Builder(requireContext()).build().show()
+        }
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
+        Toast.makeText(requireContext(), "Permission Granted", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 
     override fun onDestroyView() {

@@ -21,7 +21,9 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.lrm.kravito.R
 import com.lrm.kravito.databinding.FragmentHomeBinding
 import com.lrm.kravito.utils.PermissionCodes
@@ -72,12 +74,29 @@ class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             profileViewModel.getUserProfile()
         }
 
+        profileViewModel.userProfile.observe(viewLifecycleOwner) { userProfile ->
+            if (userProfile?.profilePic == "") {
+                binding.profileIcon.setImageResource(R.drawable.profile_user_icon)
+            } else {
+                Glide.with(this@HomeFragment)
+                    .load(userProfile?.profilePic)
+                    .placeholder(R.drawable.profile_user_icon)
+                    .into(binding.profileIcon)
+            }
+        }
+
         if (!hasPermissions()) {
             requestNotificationAndLocationPermission()
         }
 
         if (hasPermissions()) {
             if (profileViewModel.userLocation.value == "Loading Location...") {
+                getLocation()
+            }
+        }
+
+        binding.locationText.setOnClickListener {
+            if (hasPermissions()) {
                 getLocation()
             }
         }
@@ -140,13 +159,24 @@ class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                     val address = list!![0]
                     val userLocation = "${address.getAddressLine(0)} \n${address.locality}"
                     profileViewModel.setUserLocation(userLocation)
+                    Log.i("MyLogMessages", "HomeFragment: Location Update $userLocation")
                 }
             }
         } else {
             Toast.makeText(requireContext(), "Please turn on location", Toast.LENGTH_LONG).show()
-            val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-            startActivity(intent)
+            showTurnOnLocationDialog()
         }
+    }
+
+    private fun showTurnOnLocationDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Turn on Location")
+            .setCancelable(true)
+            .setPositiveButton("Go to Settings") { _, _ ->
+                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivity(intent)
+            }
+            .show()
     }
 
     private fun isLocationEnabled(): Boolean {
@@ -204,9 +234,11 @@ class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
+        if (hasPermissions()) {
+            getLocation()
+        }
         Toast.makeText(requireContext(), "Permission Granted", Toast.LENGTH_SHORT).show()
     }
-
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
