@@ -1,5 +1,6 @@
 package com.lrm.kravito.fragments
 
+import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -22,9 +24,12 @@ import com.lrm.kravito.constants.RETURN_AND_CANCELLATION_POLICY
 import com.lrm.kravito.constants.TERMS_AND_CONDITIONS_URI
 import com.lrm.kravito.databinding.FragmentProfileBinding
 import com.lrm.kravito.model.User
+import com.lrm.kravito.utils.PermissionCodes
 import com.lrm.kravito.viewModel.ProfileViewModel
+import com.vmadalin.easypermissions.EasyPermissions
+import com.vmadalin.easypermissions.dialogs.SettingsDialog
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
@@ -84,8 +89,24 @@ class ProfileFragment : Fragment() {
         binding.returnPolicy.setOnClickListener { showReturnAndCancellationPolicy() }
         binding.rateAppCv.setOnClickListener { openPlayStore() }
 
+        binding.callSupport.setOnClickListener {
+            if (hasPermission()) {
+                makeCall("8008308770")
+            } else {
+                requestPermission()
+            }
+        }
+
         binding.logOutCv.setOnClickListener { showLogOutDialog() }
     }
+
+    private fun makeCall(phoneNumber: String) {
+        val intent = Intent(Intent.ACTION_CALL)
+        intent.data = Uri.parse("tel:$phoneNumber")
+        startActivity(intent)
+    }
+
+
 
     private fun bind(userProfile: User){
         binding.profileName.text = userProfile.profileName
@@ -147,6 +168,44 @@ class ProfileFragment : Fragment() {
             }
             .show()
     }
+
+    private fun hasPermission(): Boolean {
+        return EasyPermissions.hasPermissions(
+            requireContext(),
+            Manifest.permission.CALL_PHONE
+        )
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {
+        if (EasyPermissions.permissionPermanentlyDenied(this, perms.first())) {
+            SettingsDialog.Builder(requireContext()).build().show()
+        }
+    }
+
+    override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
+        Toast.makeText(requireContext(), "Permission Granted", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun requestPermission() {
+        EasyPermissions.requestPermissions(
+            this,
+            "Permission is required to make call",
+            PermissionCodes.CALL_PERMISSION_CODE,
+            Manifest.permission.CALL_PHONE
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        //EasyPermissions handles the request result
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
 
     private fun logOut() {
         profileViewModel.setUserProfile(null)

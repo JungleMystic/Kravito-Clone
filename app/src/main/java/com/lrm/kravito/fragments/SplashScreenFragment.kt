@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
-import com.lrm.kravito.R
 import com.lrm.kravito.databinding.FragmentSplashScreenBinding
 
 class SplashScreenFragment : Fragment() {
@@ -38,9 +37,11 @@ class SplashScreenFragment : Fragment() {
 
         Handler(Looper.myLooper()!!).postDelayed({
             if (currentUser != null) {
-                findNavController().navigate(R.id.action_splashScreenFragment_to_homeFragment)
+                val action = SplashScreenFragmentDirections.actionSplashScreenFragmentToHomeFragment()
+                this@SplashScreenFragment.findNavController().navigate(action)
             } else {
-                findNavController().navigate(R.id.action_splashScreenFragment_to_loginFragment)
+                val action = SplashScreenFragmentDirections.actionSplashScreenFragmentToLoginFragment()
+                this@SplashScreenFragment.findNavController().navigate(action)
             }
         }, 1500)
     }

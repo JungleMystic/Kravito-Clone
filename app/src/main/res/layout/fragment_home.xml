@@ -39,7 +39,7 @@
                     android:id="@+id/location_text"
                     android:layout_width="0dp"
                     android:layout_height="35dp"
-                    android:text="@string/loading_location"
+                    tools:text="@string/loading_location"
                     android:textColor="@color/black"
                     android:textSize="12sp"
                     android:textStyle="bold"

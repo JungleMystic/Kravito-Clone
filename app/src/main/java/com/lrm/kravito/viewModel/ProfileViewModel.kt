@@ -16,6 +16,9 @@ class ProfileViewModel:ViewModel() {
     private val _userProfile = MutableLiveData<User?>()
     val userProfile: LiveData<User?> get() = _userProfile
 
+    private val _userLocation = MutableLiveData<String>("Loading Location...")
+    val userLocation: LiveData<String> get() = _userLocation
+
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
     private lateinit var currentUserNumber: String
@@ -38,5 +41,9 @@ class ProfileViewModel:ViewModel() {
     fun setUserProfile(user: User?) {
         Log.i("MyLogMessages", "setUserProfile: $user")
         _userProfile.value = user
+    }
+
+    fun setUserLocation(location: String) {
+        _userLocation.value = location
     }
 }
