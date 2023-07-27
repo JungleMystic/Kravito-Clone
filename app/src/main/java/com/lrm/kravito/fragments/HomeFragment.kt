@@ -86,7 +86,7 @@ class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         }
 
         if (!hasPermissions()) {
-            requestNotificationAndLocationPermission()
+            requestNotificationAndLocationPermissions()
         }
 
         if (hasPermissions()) {
@@ -98,6 +98,8 @@ class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         binding.locationText.setOnClickListener {
             if (hasPermissions()) {
                 getLocation()
+            } else {
+                requestNotificationAndLocationPermissions()
             }
         }
 
@@ -212,7 +214,7 @@ class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         )
     }
 
-    private fun requestNotificationAndLocationPermission() {
+    private fun requestNotificationAndLocationPermissions() {
         EasyPermissions.requestPermissions(
             this,
             "Permission is required to get notifications",
