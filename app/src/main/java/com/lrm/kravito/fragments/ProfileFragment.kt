@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.lrm.kravito.R
+import com.lrm.kravito.constants.LOG_DATA
 import com.lrm.kravito.constants.PLAY_STORE_LINK
 import com.lrm.kravito.constants.PRIVACY_POLICY_URI
 import com.lrm.kravito.constants.RETURN_AND_CANCELLATION_POLICY
@@ -69,7 +70,7 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         auth = FirebaseAuth.getInstance()
 
         profileViewModel.userProfile.observe(viewLifecycleOwner) {userProfile ->
-            Log.i("MyLogMessages", "ProfileFragment: LiveData Observer $userProfile")
+            Log.i(LOG_DATA, "ProfileFragment: LiveData Observer $userProfile")
             if (userProfile != null) {
                 bind(userProfile)
             }
@@ -89,24 +90,20 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         binding.returnPolicy.setOnClickListener { showReturnAndCancellationPolicy() }
         binding.rateAppCv.setOnClickListener { openPlayStore() }
 
-        binding.callSupport.setOnClickListener {
-            if (hasPermission()) {
-                makeCall()
-            } else {
-                requestPermission()
-            }
-        }
+        binding.callSupport.setOnClickListener { makeCall() }
 
         binding.logOutCv.setOnClickListener { showLogOutDialog() }
     }
 
     private fun makeCall() {
-        val intent = Intent(Intent.ACTION_CALL)
-        intent.data = Uri.parse("tel:8008308770")
-        startActivity(intent)
+        if (hasPermission()) {
+            val intent = Intent(Intent.ACTION_CALL)
+            intent.data = Uri.parse("tel:8008308770")
+            startActivity(intent)
+        } else {
+            requestPermission()
+        }
     }
-
-
 
     private fun bind(userProfile: User){
         binding.profileName.text = userProfile.profileName
@@ -209,7 +206,7 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     private fun logOut() {
         profileViewModel.setUserProfile(null)
-        Log.i("MyLogMessages", "ProfileFragment: After SignOut ${profileViewModel.userProfile.value}")
+        Log.i(LOG_DATA, "ProfileFragment: After SignOut ${profileViewModel.userProfile.value}")
         auth.signOut()
         val action = ProfileFragmentDirections.actionProfileFragmentToLoginFragment()
         this.findNavController().navigate(action)
@@ -241,6 +238,8 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        isTosExpanded = false
+        isHelpSupportExpanded = false
         _binding = null
     }
 }

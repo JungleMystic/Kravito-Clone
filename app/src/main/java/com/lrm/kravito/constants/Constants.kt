@@ -7,3 +7,6 @@ const val PLAY_STORE_LINK = "https://play.google.com/store/apps/details?id=com.f
 
 // To Create a User in Firebase
 const val USERS_COLLECTION = "users"
+
+// For Log Messages
+const val LOG_DATA = "MyLogMessages"

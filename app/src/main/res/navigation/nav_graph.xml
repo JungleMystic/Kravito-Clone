@@ -90,6 +90,13 @@
             app:exitAnim="@anim/exit_anim"
             app:popEnterAnim="@anim/pop_enter_anim"
             app:popExitAnim="@anim/pop_exit_anim"/>
+        <action
+            android:id="@+id/action_homeFragment_to_restaurantFragment"
+            app:destination="@id/restaurantFragment"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim"/>
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -133,4 +140,13 @@
         android:name="com.lrm.kravito.fragments.NotificationsFragment"
         android:label="fragment_notifications"
         tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/restaurantFragment"
+        android:name="com.lrm.kravito.fragments.RestaurantFragment"
+        android:label="RestaurantFragment"
+        tools:layout="@layout/fragment_restaurant">
+        <argument
+            android:name="restaurantId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

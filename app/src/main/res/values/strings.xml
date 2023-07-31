@@ -54,4 +54,14 @@
     <string name="phone_number">Phone Number</string>
     <string name="profile">Profile</string>
     <string name="loading_location">Loading Location…</string>
+    <string name="go_to_network_settings">Go to Network Settings</string>
+    <string name="no_internet">No Internet</string>
+    <string name="search_hint">Your Favourite Dish or Restaurant</string>
+    <string name="top_offers">Top Offers</string>
+    <string name="what_s_on_your_mind">What\'s on your mind…?</string>
+    <string name="restaurants_near_you">Restaurants Near You…</string>
+    <string name="delicious_food">Delicious Food</string>
+    <string name="menu">Menu</string>
+    <string name="search_for_dishes">Search for dishes…</string>
+    <string name="currency_symbol">₹ </string>
 </resources>

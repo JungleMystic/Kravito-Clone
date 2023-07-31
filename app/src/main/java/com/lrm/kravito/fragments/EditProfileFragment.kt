@@ -3,6 +3,7 @@ package com.lrm.kravito.fragments
 import android.Manifest
 import android.app.DatePickerDialog
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -20,6 +22,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.lrm.kravito.R
+import com.lrm.kravito.constants.LOG_DATA
 import com.lrm.kravito.constants.USERS_COLLECTION
 import com.lrm.kravito.databinding.FragmentEditProfileBinding
 import com.lrm.kravito.model.User
@@ -38,12 +41,12 @@ class EditProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     private val profileViewModel: ProfileViewModel by activityViewModels()
 
-    private lateinit var filePath: Uri
+    private var filePath: Uri = Uri.EMPTY
     private lateinit var storageRef: StorageReference
-    private val contract = registerForActivityResult(ActivityResultContracts.GetContent()) {
+    private val contract = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {
         if (it != null) {
             filePath = it
-            Log.i("MyLogMessages", "EditProfileFragment: File path-> $filePath")
+            Log.i(LOG_DATA, "EditProfileFragment: File path-> $filePath")
             binding.profileImage.setImageURI(filePath)
         } else {
             filePath = Uri.EMPTY
@@ -66,7 +69,7 @@ class EditProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         binding.backIcon.setOnClickListener { this.findNavController().navigateUp() }
 
         profileViewModel.userProfile.observe(viewLifecycleOwner) { userProfile ->
-            Log.i("MyLogMessages", "EditProfileFragment: LiveData Observer $userProfile")
+            Log.i(LOG_DATA, "EditProfileFragment: LiveData Observer $userProfile")
             if (userProfile != null) {
                 bind(userProfile)
             }
@@ -89,7 +92,7 @@ class EditProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     private fun pickImageFromGallery() {
-        contract.launch("image/*")
+        contract.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
     private fun showDatePicker() {
@@ -101,8 +104,8 @@ class EditProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
         val datePickerDialog = DatePickerDialog(requireContext(),
-            { _, dob_year, dob_month, dob_day ->
-                calendar.set(dob_year, dob_month, dob_day)
+            { _, dobYear, dobMonth, dobDay ->
+                calendar.set(dobYear, dobMonth, dobDay)
                 binding.dobDate.text = sdf.format(calendar.timeInMillis)
             }, currentYear, currentMonth, currentDay
         )
@@ -203,19 +206,35 @@ class EditProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     private fun hasPermission(): Boolean {
-        return EasyPermissions.hasPermissions(
-            requireContext(),
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        )
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            EasyPermissions.hasPermissions(
+                requireContext(),
+                Manifest.permission.READ_MEDIA_IMAGES
+            )
+        } else {
+            EasyPermissions.hasPermissions(
+                requireContext(),
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        }
     }
 
     private fun requestPermission() {
-        EasyPermissions.requestPermissions(
-            this,
-            "Permission is required to upload profile photo",
-            PermissionCodes.READ_EXTERNAL_STORAGE_PERMISSION_CODE,
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            EasyPermissions.requestPermissions(
+                this,
+                "Permission is required to upload profile photo",
+                PermissionCodes.READ_EXTERNAL_STORAGE_PERMISSION_CODE,
+                Manifest.permission.READ_MEDIA_IMAGES
+            )
+        } else {
+            EasyPermissions.requestPermissions(
+                this,
+                "Permission is required to upload profile photo",
+                PermissionCodes.READ_EXTERNAL_STORAGE_PERMISSION_CODE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        }
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {

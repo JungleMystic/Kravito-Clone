@@ -20,6 +20,7 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.lrm.kravito.R
+import com.lrm.kravito.constants.LOG_DATA
 import com.lrm.kravito.databinding.FragmentOtpVerificationBinding
 import com.lrm.kravito.viewModel.LoginViewModel
 import kotlinx.coroutines.launch
@@ -72,7 +73,7 @@ class OtpVerificationFragment : Fragment() {
 
             override fun onVerificationFailed(p0: FirebaseException) {
                 p0.printStackTrace()
-                Log.e("MyLogMessages", "onVerificationFailed: ${p0.message}")
+                Log.e(LOG_DATA, "onVerificationFailed: ${p0.message}")
                 Toast.makeText(requireContext(), "Login Failed, Try again...", Toast.LENGTH_SHORT)
                     .show()
             }
@@ -111,8 +112,8 @@ class OtpVerificationFragment : Fragment() {
         val currentUserPhone = auth.currentUser?.phoneNumber
         val currentUserUid = auth.currentUser?.uid
 
-        Log.i("MyLogMessages", "checkUser: $currentUserPhone")
-        Log.i("MyLogMessages", "checkUser: $currentUserUid")
+        Log.i(LOG_DATA, "checkUser: $currentUserPhone")
+        Log.i(LOG_DATA, "checkUser: $currentUserUid")
 
         lifecycleScope.launch {
             if (currentUserPhone != null) {
