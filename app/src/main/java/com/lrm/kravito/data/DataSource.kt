@@ -51,15 +51,6 @@ object RestaurantData {
     val restaurantList = listOf(
         Restaurant(
             3001,
-            "Biryani Palace",
-            R.drawable.r1,
-            "4.0",
-            "6 km",
-            "All types of Biryanis",
-            "Dwarakanagar", 501
-        ),
-        Restaurant(
-            3002,
             "Maha's Cuisine",
             R.drawable.r9,
             "5.0",
@@ -68,13 +59,22 @@ object RestaurantData {
             "Boyapalem", 501
         ),
         Restaurant(
+            3002,
+            "Biryani Palace",
+            R.drawable.r1,
+            "4.0",
+            "6 km",
+            "All types of Biryanis",
+            "Dwarakanagar", 503
+        ),
+        Restaurant(
             3003,
             "Dosa Point",
             R.drawable.r7,
             "4.3",
             "2 km",
             "Dosa- Masala, Upma, Ravva, Onion, Plain, Egg...",
-            "Marikavalsa", 501
+            "Marikavalsa", 502
         ),
         Restaurant(
             3004,
@@ -173,6 +173,9 @@ object MenuTypes {
     const val FRIED_RICE = "Fried Rice"
     const val BEVERAGES = "Beverages"
     const val DESSERTS = "Desserts"
+    const val DOSA_SPECIALS = "Dosa Specials"
+    const val TIFFINS = "Tiffins"
+    const val BIRYANIS = "Biryanis"
 }
 
 object RestaurantMenuData {
@@ -221,8 +224,106 @@ object RestaurantMenuData {
                 ),
                 FoodItem(
                     MenuTypes.DESSERTS, listOf(
-                        Item("Gulab Jamun 2pc", "60", 0),
-                        Item("Rasmalai 2pc", "75", 0),
+                        Item("Gulab Jamun (2 Pcs)", "60", 0),
+                        Item("Rasmalai (2 Pcs)", "75", 0),
+                        Item("Belgium Chocolate Ice Cream", "100", 0)
+                    )
+                )
+            )
+        ),
+        RestaurantMenu(
+            502,
+            listOf(
+                FoodItem(
+                    MenuTypes.TIFFINS, listOf(
+                        Item("Idli", "60",0),
+                        Item("Sambar Idli", "85", 0),
+                        Item("Curd Vada", "87", 0),
+                        Item("Vada", "70", 0),
+                        Item("Poori (2 Pcs)", "90", 0),
+                        Item("Upma", "65", 0),
+                        Item("Mysore Bajji", "95", 0),
+                        Item("Parota", "90", 0)
+                    )
+                ),
+                FoodItem(
+                    MenuTypes.DOSA_SPECIALS, listOf(
+                        Item("Masala Dosa", "90", 0),
+                        Item("Onion Rava Dosa", "92", 0),
+                        Item("Paneer Masala Dosa", "110", 0),
+                        Item("Rava Dosa", "75",0),
+                        Item("Plain Pesara", "75",0),
+                        Item("Onion Pesara", "90",0),
+                        Item("Ghee Masala Dosa", "99",0),
+                        Item("Plain Dosa", "75",0),
+                        Item("Onion Minapa Dosa", "90",0),
+                        Item("Plain Uttappam", "85",0),
+                        Item("Onion Uttappam", "96",0),
+                        Item("Upma Pesara", "99",0),
+                    )
+                ),
+                FoodItem(
+                    MenuTypes.BEVERAGES, listOf(
+                        Item("Badam Milk", "50", 0),
+                        Item("Lassi", "45", 0),
+                        Item("Butter Milk", "30", 0),
+                        Item("Pepsi 120ml", "70", 0),
+                        Item("Water Bottle", "26", 0)
+                    )
+                ),
+                FoodItem(
+                    MenuTypes.DESSERTS, listOf(
+                        Item("Gulab Jamun (1 Pc)", "45", 0),
+                        Item("Rasmalai (1 Pc)", "50", 0),
+                        Item("Belgium Chocolate Ice Cream", "100", 0)
+                    )
+                )
+            )
+        ),
+        RestaurantMenu(
+            503,
+            listOf(
+                FoodItem(
+                    MenuTypes.FRIED_RICE, listOf(
+                        Item("Veg Fried Rice", "240",0),
+                        Item("Paneer Fried Rice", "300", 0),
+                        Item("Mushroom Kaju  Fried Rice", "320", 0),
+                        Item("Jeera Rice", "220", 0),
+                        Item("Egg Fried Rice", "250", 1),
+                        Item("Chicken Fried Rice", "260", 1),
+                        Item("Prawn Fried Rice", "300", 1),
+                    )
+                ),
+                FoodItem(
+                    MenuTypes.BIRYANIS, listOf(
+                        Item("Veg Biryani", "240", 0),
+                        Item("Paneer Biryani", "300", 0),
+                        Item("Mushroom Biryani", "300", 0),
+                        Item("Kaju Paneer Biryani", "320",0),
+                        Item("Chicken 65 Biryani", "330",1),
+                        Item("Chicken Lollipop Biryani", "360",1),
+                        Item("Chicken Tandoori Biryani", "360",1),
+                        Item("Chicken Kalmi Biryani", "360",1),
+                        Item("Boneless Chicken Biryani", "330",1),
+                        Item("Prawns Biryani", "330",1),
+                        Item("Chicken Dum Biryani", "280",1),
+                        Item("Chicken Mughlai Biryani", "360",1),
+                        Item("Fish Biryani", "360",1)
+                    )
+                ),
+                FoodItem(
+                    MenuTypes.BEVERAGES, listOf(
+                        Item("Badam Milk", "50", 0),
+                        Item("Lassi", "45", 0),
+                        Item("Butter Milk", "30", 0),
+                        Item("Pepsi 120ml", "70", 0),
+                        Item("Water Bottle", "26", 0)
+                    )
+                ),
+                FoodItem(
+                    MenuTypes.DESSERTS, listOf(
+                        Item("Gulab Jamun (1 Pc)", "45", 0),
+                        Item("Rasmalai (1 Pc)", "50", 0),
                         Item("Belgium Chocolate Ice Cream", "100", 0)
                     )
                 )

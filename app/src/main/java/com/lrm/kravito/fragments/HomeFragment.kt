@@ -72,6 +72,14 @@ class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_anti_clock_wise)
     }
 
+    private val alphaUp: Animation by lazy {
+        AnimationUtils.loadAnimation(requireContext(), R.anim.alpha_up)
+    }
+
+    private val alphaDown: Animation by lazy {
+        AnimationUtils.loadAnimation(requireContext(), R.anim.alpha_down)
+    }
+
     private val profileViewModel: ProfileViewModel by activityViewModels()
 
     private lateinit var networkDialog: Dialog
@@ -297,7 +305,7 @@ class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     private fun expandFabMenu() {
         isExpanded = !isExpanded
-        binding.nestedSv.alpha = 0.1F
+        binding.nestedSv.startAnimation(alphaDown)
         binding.menuFab.startAnimation(rotateClockWise)
         binding.notificationLl.startAnimation(fabUp)
         binding.favouritesLl.startAnimation(fabUp)
@@ -306,7 +314,7 @@ class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     private fun shrinkFabMenu() {
         isExpanded = !isExpanded
-        binding.nestedSv.alpha = 1.0F
+        binding.nestedSv.startAnimation(alphaUp)
         binding.menuFab.startAnimation(rotateAntiClockWise)
         binding.notificationLl.startAnimation(fabDown)
         binding.favouritesLl.startAnimation(fabDown)

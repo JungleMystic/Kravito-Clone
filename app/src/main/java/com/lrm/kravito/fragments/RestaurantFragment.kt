@@ -5,9 +5,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import com.lrm.kravito.R
 import com.lrm.kravito.adapter.ParentMenuTypesAdapter
+import com.lrm.kravito.adapter.ShortMenuAdapter
 import com.lrm.kravito.constants.LOG_DATA
 import com.lrm.kravito.data.Restaurant
 import com.lrm.kravito.data.RestaurantData
@@ -20,6 +24,22 @@ class RestaurantFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val navigationArgs: RestaurantFragmentArgs by navArgs()
+
+    private val rotateClockWise: Animation by lazy {
+        AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_clock_wise)
+    }
+    private val rotateAntiClockWise: Animation by lazy {
+        AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_anti_clock_wise)
+    }
+    private val alphaUp: Animation by lazy {
+        AnimationUtils.loadAnimation(requireContext(), R.anim.alpha_up)
+    }
+    private val alphaDown2: Animation by lazy {
+        AnimationUtils.loadAnimation(requireContext(), R.anim.alpha_down2)
+    }
+    private val alphaDown3: Animation by lazy {
+        AnimationUtils.loadAnimation(requireContext(), R.anim.alpha_down3)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,6 +67,33 @@ class RestaurantFragment : Fragment() {
 
         binding.menuCategoryRv.apply {
             adapter = ParentMenuTypesAdapter(requireContext(), categoryList)
+        }
+
+        binding.shortMenuRv.apply {
+            adapter = ShortMenuAdapter(categoryList)
+        }
+
+        binding.addToFav.setOnClickListener {
+            binding.addToFav.isSelected = !binding.addToFav.isSelected
+        }
+
+        var isMenuExpanded = false
+
+        binding.menuFab.setOnClickListener {
+            isMenuExpanded = !isMenuExpanded
+           if (isMenuExpanded) {
+               binding.nestedSv.startAnimation(alphaDown3)
+               binding.shortMenuCl.visibility = View.VISIBLE
+               binding.shortMenuCl.startAnimation(alphaUp)
+               binding.menuFab.startAnimation(rotateClockWise)
+               binding.menuFab.setImageResource(R.drawable.ic_close_icon)
+           } else {
+               binding.nestedSv.startAnimation(alphaUp)
+               binding.shortMenuCl.startAnimation(alphaDown2)
+               binding.shortMenuCl.visibility = View.GONE
+               binding.menuFab.startAnimation(rotateAntiClockWise)
+               binding.menuFab.setImageResource(R.drawable.ic_menu_icon)
+           }
         }
     }
 

@@ -9,10 +9,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="15dp"
-    android:layout_marginStart="20dp"
-    android:layout_marginEnd="20dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
     android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp">
+    android:layout_marginBottom="5dp"
+    app:strokeColor="@color/light_grey2">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -35,7 +36,7 @@
             android:id="@+id/expand_menu"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/ic_expand_more"
+            android:src="@drawable/ic_expand_less"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/category_name"
             app:layout_constraintBottom_toBottomOf="@id/category_name"
@@ -60,7 +61,7 @@
             tools:listitem="@layout/food_item_list_item"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:nestedScrollingEnabled="false"
-            android:visibility="gone"/>
+            android:visibility="visible"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

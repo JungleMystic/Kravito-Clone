@@ -44,15 +44,15 @@ class ParentMenuTypesAdapter(
             binding.itemsRv.apply { adapter = ChildFoodItemsListAdapter(menuCategory.itemList) }
             Log.i(LOG_DATA, "ParentMenuTypesAdapter: Food Items List-> ${menuCategory.itemList} ")
 
-            var isExpanded = false
+            var isExpanded = true
             binding.categoryCard.setOnClickListener {
                 if (isExpanded) {
                     binding.itemsRv.visibility = View.GONE
-                    binding.expandMenu.startAnimation(rotateAntiClockWise)
+                    binding.expandMenu.startAnimation(rotateClockWise)
                     binding.itemsRv.startAnimation(dropDownMenuUp)
                 } else {
                     binding.itemsRv.visibility = View.VISIBLE
-                    binding.expandMenu.startAnimation(rotateClockWise)
+                    binding.expandMenu.startAnimation(rotateAntiClockWise)
                     binding.itemsRv.startAnimation(dropDownMenuDown)
                 }
                 isExpanded = !isExpanded
