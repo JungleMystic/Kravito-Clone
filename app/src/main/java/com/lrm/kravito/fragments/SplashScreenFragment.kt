@@ -1,5 +1,6 @@
 package com.lrm.kravito.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.lrm.kravito.databinding.FragmentSplashScreenBinding
 
+@SuppressLint("CustomSplashScreen")
 class SplashScreenFragment : Fragment() {
 
     private var _binding: FragmentSplashScreenBinding? = null
@@ -34,8 +36,7 @@ class SplashScreenFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
 
-
-        Handler(Looper.myLooper()!!).postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
             if (currentUser != null) {
                 val action = SplashScreenFragmentDirections.actionSplashScreenFragmentToHomeFragment()
                 this@SplashScreenFragment.findNavController().navigate(action)

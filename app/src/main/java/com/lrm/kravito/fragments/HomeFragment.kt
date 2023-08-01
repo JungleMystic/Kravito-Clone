@@ -339,24 +339,27 @@ class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     private fun requestNotificationAndLocationPermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            EasyPermissions.requestPermissions(
-                this,
-                "Permission is required to get notifications and location",
-                PermissionCodes.NOTIFICATION_LOCATION_PERMISSION_CODE,
-                Manifest.permission.POST_NOTIFICATIONS,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-        } else {
-            EasyPermissions.requestPermissions(
-                this,
-                "Permission is required to get location",
-                PermissionCodes.NOTIFICATION_LOCATION_PERMISSION_CODE,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-        }
+
+        Handler(Looper.myLooper()!!).postDelayed({
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                EasyPermissions.requestPermissions(
+                    this,
+                    "Permission is required to get notifications and location",
+                    PermissionCodes.NOTIFICATION_LOCATION_PERMISSION_CODE,
+                    Manifest.permission.POST_NOTIFICATIONS,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+            } else {
+                EasyPermissions.requestPermissions(
+                    this,
+                    "Permission is required to get location",
+                    PermissionCodes.NOTIFICATION_LOCATION_PERMISSION_CODE,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+            }
+        }, 2000)
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {
