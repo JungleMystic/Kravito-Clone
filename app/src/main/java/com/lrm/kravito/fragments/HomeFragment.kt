@@ -104,7 +104,7 @@ class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                     getLocation()
                 }
             }
-        }, 2000)
+        }, 4000)
 
         if (profileViewModel.userProfile.value == null) {
             Log.i(
