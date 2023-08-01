@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lrm.kravito.data.FoodItem
 import com.lrm.kravito.databinding.ShortMenuListItemBinding
 
-class ShortMenuAdapter(private val categoryList: List<FoodItem>) :
-    RecyclerView.Adapter<ShortMenuAdapter.MenuItemViewHolder>() {
+class ShortMenuAdapter(private val categoryList: List<FoodItem>
+): RecyclerView.Adapter<ShortMenuAdapter.MenuItemViewHolder>() {
 
     inner class MenuItemViewHolder(private val binding: ShortMenuListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {

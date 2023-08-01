@@ -12,16 +12,20 @@ import com.lrm.kravito.R
 import com.lrm.kravito.constants.LOG_DATA
 import com.lrm.kravito.data.FoodItem
 import com.lrm.kravito.databinding.MenuCategoryListItemBinding
+import com.lrm.kravito.viewModel.OrderViewModel
 
 class ParentMenuTypesAdapter(
     val context: Context,
-    private val categoryList: List<FoodItem>
-): RecyclerView.Adapter<ParentMenuTypesAdapter.CategoryViewHolder>() {
+    private val categoryList: List<FoodItem>,
+    private val viewModel: OrderViewModel,
+    private val onItemClicked: () -> Unit
+) : RecyclerView.Adapter<ParentMenuTypesAdapter.CategoryViewHolder>() {
 
     val itemContext = context
 
-    inner class CategoryViewHolder(private val binding: MenuCategoryListItemBinding
-    ): RecyclerView.ViewHolder(binding.root) {
+    inner class CategoryViewHolder(
+        private val binding: MenuCategoryListItemBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         private val rotateClockWise: Animation by lazy {
             AnimationUtils.loadAnimation(itemContext, R.anim.rotate_clock_wise)
@@ -41,11 +45,16 @@ class ParentMenuTypesAdapter(
         fun bind(menuCategory: FoodItem) {
             binding.categoryName.text = menuCategory.itemCategory
 
-            binding.itemsRv.apply { adapter = ChildFoodItemsListAdapter(menuCategory.itemList) }
+            binding.itemsRv.apply {
+                adapter = ChildFoodItemsListAdapter(menuCategory.itemList, viewModel) {
+                    onItemClicked()
+                }
+            }
             Log.i(LOG_DATA, "ParentMenuTypesAdapter: Food Items List-> ${menuCategory.itemList} ")
 
-            var isExpanded = true
-            binding.categoryCard.setOnClickListener {
+            var isExpanded = false
+            binding.expandMenu.setOnClickListener {
+                isExpanded = !isExpanded
                 if (isExpanded) {
                     binding.itemsRv.visibility = View.GONE
                     binding.expandMenu.startAnimation(rotateClockWise)
@@ -55,7 +64,6 @@ class ParentMenuTypesAdapter(
                     binding.expandMenu.startAnimation(rotateAntiClockWise)
                     binding.itemsRv.startAnimation(dropDownMenuDown)
                 }
-                isExpanded = !isExpanded
             }
         }
     }

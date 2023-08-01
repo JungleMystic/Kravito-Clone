@@ -1,13 +1,17 @@
 package com.lrm.kravito.fragments
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import com.lrm.kravito.R
 import com.lrm.kravito.adapter.ParentMenuTypesAdapter
@@ -17,6 +21,7 @@ import com.lrm.kravito.data.Restaurant
 import com.lrm.kravito.data.RestaurantData
 import com.lrm.kravito.data.RestaurantMenuData
 import com.lrm.kravito.databinding.FragmentRestaurantBinding
+import com.lrm.kravito.viewModel.OrderViewModel
 
 class RestaurantFragment : Fragment() {
 
@@ -24,6 +29,7 @@ class RestaurantFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val navigationArgs: RestaurantFragmentArgs by navArgs()
+    private val orderViewModel: OrderViewModel by activityViewModels()
 
     private val rotateClockWise: Animation by lazy {
         AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_clock_wise)
@@ -40,6 +46,12 @@ class RestaurantFragment : Fragment() {
     private val alphaDown3: Animation by lazy {
         AnimationUtils.loadAnimation(requireContext(), R.anim.alpha_down3)
     }
+    private val cartUp: Animation by lazy {
+        AnimationUtils.loadAnimation(requireContext(), R.anim.cart_up)
+    }
+    private val cartDown: Animation by lazy {
+        AnimationUtils.loadAnimation(requireContext(), R.anim.cart_down)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,6 +64,14 @@ class RestaurantFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.nestedSv.isSmoothScrollingEnabled = true
+        binding.nestedSv.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            Handler(Looper.myLooper()!!).postDelayed({
+                binding.viewCartCard.clearAnimation()
+                binding.viewCartCard.visibility = View.GONE
+            }, 1000)
+        })
 
         val restaurantId = navigationArgs.restaurantId
         Log.i(LOG_DATA, "onViewCreated: restaurantId = $restaurantId")
@@ -66,7 +86,10 @@ class RestaurantFragment : Fragment() {
         val categoryList = restaurantMenu.categoryList
 
         binding.menuCategoryRv.apply {
-            adapter = ParentMenuTypesAdapter(requireContext(), categoryList)
+            adapter = ParentMenuTypesAdapter(requireContext(), categoryList, orderViewModel) {
+                binding.viewCartCard.visibility = View.VISIBLE
+                binding.viewCartCard.startAnimation(cartUp)
+            }
         }
 
         binding.shortMenuRv.apply {

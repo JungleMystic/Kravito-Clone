@@ -2,15 +2,19 @@ package com.lrm.kravito.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lrm.kravito.R
 import com.lrm.kravito.constants.LOG_DATA
 import com.lrm.kravito.data.Item
 import com.lrm.kravito.databinding.FoodItemListItemBinding
+import com.lrm.kravito.viewModel.OrderViewModel
 
 class ChildFoodItemsListAdapter(
-    private val itemsList: List<Item>
+    private val itemsList: List<Item>,
+    private val viewModel: OrderViewModel,
+    private val onItemClicked: () -> Unit
 ): RecyclerView.Adapter<ChildFoodItemsListAdapter.ItemViewHolder>() {
 
     inner class ItemViewHolder(
@@ -18,7 +22,6 @@ class ChildFoodItemsListAdapter(
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(foodItem: Item) {
             Log.i(LOG_DATA, "ChildFoodItemsListAdpater: Food Items List -> $itemsList")
-
             binding.itemName.text = foodItem.name
             binding.itemPrice.text = foodItem.quotedPrice
             if (foodItem.type == 0) {
@@ -26,6 +29,26 @@ class ChildFoodItemsListAdapter(
             } else if (foodItem.type == 1) {
                 binding.vNvIcon.setImageResource(R.drawable.non_veg_icon)
             }
+
+            binding.addCartButton.setOnClickListener{
+                binding.addCartButton.visibility = View.GONE
+                //binding.cartCard.isEnabled = false
+                //binding.addedButton.visibility = View.VISIBLE
+                binding.qtyLl.visibility = View.VISIBLE
+                viewModel.setItem(foodItem)
+                binding.itemQty.text = viewModel.itemQuantity.value.toString()
+                onItemClicked()
+            }
+
+            binding.qtyIncrease.setOnClickListener {
+                viewModel.increaseQuantity()
+                binding.itemQty.text = viewModel.itemQuantity.value.toString()
+            }
+            binding.qtyDecrease.setOnClickListener {
+                viewModel.decreaseQuantity()
+                binding.itemQty.text = viewModel.itemQuantity.value.toString()
+            }
+
         }
     }
 

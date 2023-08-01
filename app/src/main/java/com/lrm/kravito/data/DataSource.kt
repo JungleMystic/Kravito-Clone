@@ -331,3 +331,8 @@ object RestaurantMenuData {
         )
     )
 }
+
+data class Order(
+    val orderItem: Item,
+    val orderQuantity: Int
+)
