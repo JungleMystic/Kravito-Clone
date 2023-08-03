@@ -1,15 +1,14 @@
 package com.lrm.kravito.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.lrm.kravito.R
-import com.lrm.kravito.constants.LOG_DATA
 import com.lrm.kravito.data.FoodItem
 import com.lrm.kravito.databinding.MenuCategoryListItemBinding
 import com.lrm.kravito.viewModel.OrderViewModel
@@ -18,6 +17,7 @@ class ParentMenuTypesAdapter(
     val context: Context,
     private val categoryList: List<FoodItem>,
     private val viewModel: OrderViewModel,
+    private val restaurantName: String,
     private val onItemClicked: () -> Unit
 ) : RecyclerView.Adapter<ParentMenuTypesAdapter.CategoryViewHolder>() {
 
@@ -46,11 +46,12 @@ class ParentMenuTypesAdapter(
             binding.categoryName.text = menuCategory.itemCategory
 
             binding.itemsRv.apply {
-                adapter = ChildFoodItemsListAdapter(menuCategory.itemList, viewModel) {
+                adapter = ChildFoodItemsListAdapter(menuCategory.itemList, viewModel, restaurantName, context) {
                     onItemClicked()
                 }
+                ViewCompat.setNestedScrollingEnabled(binding.itemsRv, false)
             }
-            Log.i(LOG_DATA, "ParentMenuTypesAdapter: Food Items List-> ${menuCategory.itemList} ")
+            //Log.i(LOG_DATA, "ParentMenuTypesAdapter: Food Items List-> ${menuCategory.itemList} ")
 
             var isExpanded = false
             binding.expandMenu.setOnClickListener {

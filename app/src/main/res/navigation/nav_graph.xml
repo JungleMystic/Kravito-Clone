@@ -97,6 +97,9 @@
             app:exitAnim="@anim/exit_anim"
             app:popEnterAnim="@anim/pop_enter_anim"
             app:popExitAnim="@anim/pop_exit_anim"/>
+        <action
+            android:id="@+id/action_homeFragment_to_itemCartFragment"
+            app:destination="@id/itemCartFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -148,5 +151,17 @@
         <argument
             android:name="restaurantId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_restaurantFragment_to_itemCartFragment"
+            app:destination="@id/itemCartFragment"
+            app:enterAnim="@anim/enter_anim"
+            app:exitAnim="@anim/exit_anim"
+            app:popEnterAnim="@anim/pop_enter_anim"
+            app:popExitAnim="@anim/pop_exit_anim"/>
     </fragment>
+    <fragment
+        android:id="@+id/itemCartFragment"
+        android:name="com.lrm.kravito.fragments.ItemCartFragment"
+        android:label="ItemCartFragment"
+        tools:layout="@layout/fragment_item_cart"/>
 </navigation>

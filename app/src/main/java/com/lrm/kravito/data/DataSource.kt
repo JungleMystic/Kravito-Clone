@@ -168,7 +168,7 @@ data class RestaurantMenu(
 )
 
 object MenuTypes {
-    const val STARTER = "Starter"
+    const val STARTER = "Starters"
     const val MAIN_COURSE = "Main Course"
     const val FRIED_RICE = "Fried Rice"
     const val BEVERAGES = "Beverages"
@@ -201,7 +201,7 @@ object RestaurantMenuData {
                         Item("Dal Tadka", "249", 0),
                         Item("Paneer Butter Masala", "309",0),
                         Item("Egg Bhurji", "189",1),
-                        Item("Chicken Keema Masala", "₹249", 1),
+                        Item("Chicken Keema Masala", "249", 1),
                         Item("Patiyala Chicken", "379", 1)
                     )
                 ),
@@ -211,7 +211,7 @@ object RestaurantMenuData {
                         Item("Paneer Fried Rice", "240", 0),
                         Item("Schezwan Veg Fried Rice", "220", 0),
                         Item("Egg Fried Rice", "240",1),
-                        Item("Chicken Fried Rice", "₹270", 1),
+                        Item("Chicken Fried Rice", "270", 1),
                         Item("Prawn Fried Rice", "280", 1)
                     )
                 ),
@@ -332,7 +332,7 @@ object RestaurantMenuData {
     )
 }
 
-data class Order(
-    val orderItem: Item,
-    val orderQuantity: Int
+data class OrderItem(
+    val item: Item,
+    var orderQuantity: Int
 )

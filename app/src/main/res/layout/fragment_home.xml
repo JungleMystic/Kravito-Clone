@@ -323,6 +323,41 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/view_cart_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/menu_fab"
+        app:layout_constraintBottom_toTopOf="@id/track_order_ll"
+        android:visibility="invisible"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/view_cart_tile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/view_cart"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:fontFamily="@font/text_font_bold"
+            android:layout_gravity="center"
+            android:layout_marginEnd="10dp"
+            android:paddingBottom="10dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/view_cart_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/pink"
+            android:src="@drawable/track_food_icon"
+            app:tint="@color/white"
+            android:importantForAccessibility="no"
+            android:layout_marginBottom="10dp"
+            android:scaleX="0.8"
+            android:scaleY="0.8"/>
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -10,3 +10,4 @@ const val USERS_COLLECTION = "users"
 
 // For Log Messages
 const val LOG_DATA = "MyLogMessages"
+const val TAG = "MyLogMessages"

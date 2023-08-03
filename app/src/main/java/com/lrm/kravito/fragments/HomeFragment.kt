@@ -217,6 +217,11 @@ class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             val action = HomeFragmentDirections.actionHomeFragmentToTrackOrderFragment()
             this.findNavController().navigate(action)
         }
+
+        binding.viewCartFab.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToItemCartFragment()
+            this.findNavController().navigate(action)
+        }
     }
 
     private fun checkInternet() {
@@ -310,6 +315,7 @@ class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         binding.notificationLl.startAnimation(fabUp)
         binding.favouritesLl.startAnimation(fabUp)
         binding.trackOrderLl.startAnimation(fabUp)
+        binding.viewCartLl.startAnimation(fabUp)
     }
 
     private fun shrinkFabMenu() {
@@ -319,6 +325,7 @@ class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         binding.notificationLl.startAnimation(fabDown)
         binding.favouritesLl.startAnimation(fabDown)
         binding.trackOrderLl.startAnimation(fabDown)
+        binding.viewCartLl.startAnimation(fabDown)
     }
 
     private fun hasPermissions(): Boolean {

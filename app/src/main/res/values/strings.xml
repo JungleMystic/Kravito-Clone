@@ -69,4 +69,7 @@
     <string name="plus">+</string>
     <string name="added">Added</string>
     <string name="view_cart">View Cart</string>
+    <string name="multiply_symbol">x</string>
+    <string name="place_order">Place Order</string>
+    <string name="no_items_in_the_cart">No items in the cart</string>
 </resources>

@@ -1,44 +1,62 @@
 package com.lrm.kravito.viewModel
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.lrm.kravito.constants.LOG_DATA
-import com.lrm.kravito.data.Item
-import com.lrm.kravito.data.Order
+import com.lrm.kravito.constants.TAG
+import com.lrm.kravito.data.OrderItem
 
 class OrderViewModel: ViewModel() {
 
-    private val _orderCart = MutableLiveData<MutableList<Order>>()
-    val orderCart: LiveData<MutableList<Order>> get() = _orderCart
+    private val _orderCartList = MutableLiveData<MutableList<OrderItem>>(mutableListOf())
+    val orderCartList: LiveData<MutableList<OrderItem>> get() = _orderCartList
 
-    private val _item = MutableLiveData<Item>()
-    val item: LiveData<Item> get() = _item
+    private val _restaurantName = MutableLiveData<String>("")
+    val restaurantName: LiveData<String> get() = _restaurantName
 
-    private val _itemQuantity = MutableLiveData<Int>(0)
-    val itemQuantity: LiveData<Int> = _itemQuantity
-
-    fun setItem(item: Item) {
-        _item.value = item
-        Log.i(LOG_DATA, "OrderViewModel: setItemName is called -> $item ")
-        increaseQuantity()
-        addToOrderList(Order(item, 1))
-    }
-
-    fun increaseQuantity() {
-        _itemQuantity.value = _itemQuantity.value?.inc()
-        Log.i(LOG_DATA, "OrderViewModel: increaseQuantity is called -> ${itemQuantity.value} ")
-    }
-
-    fun decreaseQuantity() {
-        if (_itemQuantity.value!! > 0) {
-            _itemQuantity.value = _itemQuantity.value?.dec()
-            Log.i(LOG_DATA, "OrderViewModel: decreaseQuantity is called -> ${itemQuantity.value} ")
+    fun setRestaurantName(name: String) {
+        val oldRestaurantName = restaurantName.value!!
+        Log.i(TAG, "setRestaurantName is called -> oldName: $oldRestaurantName and newName: $name")
+        if (restaurantName.value == "" || name == oldRestaurantName || name == "") {
+            _restaurantName.value = name
+            Log.i(TAG, "setRestaurantName is called -> oldName: $oldRestaurantName and newName: $name")
         }
     }
 
-    private fun addToOrderList(order: Order) {
-        _orderCart.value?.add(order)
+    fun addToCart(orderItem: OrderItem, name: String, context: Context) {
+        val oldRestaurantName = restaurantName.value!!
+        if (oldRestaurantName == name) {
+            _orderCartList.value?.add(orderItem)
+            Log.i(TAG, "addToCart is called -> oldName: $oldRestaurantName and newName: $name")
+        } else {
+            Toast.makeText(context, "Item not added to cart...Wrong Restaurant", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun increaseCartSize(position: Int) {
+        Log.i(TAG, "increaseCartSize is called")
+        val cartItem = _orderCartList.value!![position]
+        cartItem.orderQuantity = cartItem.orderQuantity + 1
+        Log.i(TAG, "increaseCartSize modified cartItem -> $cartItem")
+        _orderCartList.value!![position] = cartItem
+        _orderCartList.value = orderCartList.value
+    }
+
+    fun decreaseCartSize(position: Int) {
+        Log.i(TAG, "decreaseCartSize is called")
+        val cartItem = _orderCartList.value!![position]
+        if (cartItem.orderQuantity > 1) {
+            cartItem.orderQuantity = cartItem.orderQuantity - 1
+            Log.i(TAG, "decreaseCartSize modified cartItem -> $cartItem")
+            _orderCartList.value!![position] = cartItem
+            _orderCartList.value = orderCartList.value
+        } else {
+            Log.i(TAG, "decreaseCartSize removed cartItem -> $cartItem")
+            _orderCartList.value!!.removeAt(position)
+            _orderCartList.value = orderCartList.value
+        }
     }
 }
