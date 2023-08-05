@@ -67,7 +67,9 @@
         android:text="@string/add"
         android:fontFamily="@font/text_font_bold"
         tools:visibility="visible"
-        app:elevation="5dp"/>
+        app:elevation="5dp"
+        android:scaleX="0.8"
+        android:scaleY="0.8"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/added_item_button"
@@ -84,7 +86,9 @@
         android:fontFamily="@font/text_font_bold"
         app:strokeWidth="0.5dp"
         app:elevation="5dp"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:scaleX="0.8"
+        android:scaleY="0.8"/>
 
     <View
         android:id="@+id/divider"

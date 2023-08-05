@@ -1,7 +1,10 @@
 package com.lrm.kravito.fragments
 
 import android.Manifest
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -10,12 +13,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.lrm.kravito.R
 import com.lrm.kravito.constants.LOG_DATA
@@ -69,7 +72,7 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
         auth = FirebaseAuth.getInstance()
 
-        profileViewModel.userProfile.observe(viewLifecycleOwner) {userProfile ->
+        profileViewModel.userProfile.observe(viewLifecycleOwner) { userProfile ->
             Log.i(LOG_DATA, "ProfileFragment: LiveData Observer $userProfile")
             if (userProfile != null) {
                 bind(userProfile)
@@ -105,7 +108,7 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         }
     }
 
-    private fun bind(userProfile: User){
+    private fun bind(userProfile: User) {
         binding.profileName.text = userProfile.profileName
         binding.profileDob.text = userProfile.profileDob
         binding.profileMail.text = userProfile.profileMail
@@ -155,15 +158,18 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     private fun showLogOutDialog() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(getString(R.string.log_out))
-            .setMessage(getString(R.string.log_out_message))
-            .setCancelable(false)
-            .setNegativeButton(getString(R.string.no)) {_, _ -> }
-            .setPositiveButton(getString(R.string.yes)) {_, _ ->
+        val dialog = Dialog(requireContext())
+        dialog.apply {
+            setContentView(R.layout.custom_log_out_dialog)
+            setCancelable(true)
+            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            findViewById<TextView>(R.id.yes_tv).setOnClickListener {
                 logOut()
+                dismiss()
             }
-            .show()
+            findViewById<TextView>(R.id.no_tv).setOnClickListener { dismiss() }
+            show()
+        }
     }
 
     private fun hasPermission(): Boolean {

@@ -280,17 +280,67 @@
 
                 </LinearLayout>
 
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/v_nv_chip_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/menu_ll"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    app:singleLine="true"
+                    app:singleSelection="true"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/veg_chip"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:checkedIcon="@drawable/veg_icon"
+                        app:chipIcon="@drawable/veg_icon"
+                        app:chipIconVisible="true"
+                        android:text="@string/veg"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/text_font_bold"
+                        app:chipStrokeColor="@color/light_grey2"
+                        app:chipStrokeWidth="0.5dp"
+                        android:elevation="3dp"
+                        android:layout_marginStart="10dp"
+                        app:chipBackgroundColor="@color/chip_bg_color"/>
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/non_veg_chip"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/non_veg"
+                        app:checkedIcon="@drawable/non_veg_icon"
+                        app:chipIcon="@drawable/non_veg_icon"
+                        app:chipIconVisible="true"
+                        tools:checked="true"
+                        android:layout_marginStart="10dp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/text_font_bold"
+                        app:chipStrokeColor="@color/light_grey2"
+                        app:chipStrokeWidth="0.5dp"
+                        android:elevation="3dp"
+                        app:chipBackgroundColor="@color/chip_bg_color"/>
+
+                </com.google.android.material.chip.ChipGroup>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/menu_category_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="false"
-                    app:layout_constraintTop_toBottomOf="@id/menu_ll"
+                    app:layout_constraintTop_toBottomOf="@id/v_nv_chip_group"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginBottom="150dp"
                     android:layout_marginTop="20dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/menu_category_list_item"/>
+                    tools:listitem="@layout/menu_category_list_item"
+                    tools:visibility="gone"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

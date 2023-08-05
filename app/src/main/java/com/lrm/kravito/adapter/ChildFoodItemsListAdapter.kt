@@ -35,9 +35,13 @@ class ChildFoodItemsListAdapter(
             }
 
             binding.addItemButton.setOnClickListener{
-                binding.addItemButton.visibility = View.GONE
-                binding.addedItemButton.visibility = View.VISIBLE
                 viewModel.setRestaurantName(restaurantName)
+
+                if (viewModel.isSameRestaurant(restaurantName)) {
+                    binding.addItemButton.visibility = View.GONE
+                    binding.addedItemButton.visibility = View.VISIBLE
+                }
+
                 viewModel.addToCart(OrderItem(foodItem, 1), restaurantName, context)
                 Log.i(LOG_DATA, "ChildFoodItemAdapter: setting order item ${OrderItem(foodItem, 1)} ")
                 onItemClicked()

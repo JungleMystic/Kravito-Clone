@@ -20,6 +20,7 @@ import com.lrm.kravito.data.Restaurant
 import com.lrm.kravito.data.RestaurantData
 import com.lrm.kravito.data.RestaurantMenuData
 import com.lrm.kravito.databinding.FragmentRestaurantBinding
+import com.lrm.kravito.viewModel.MenuViewModel
 import com.lrm.kravito.viewModel.OrderViewModel
 
 class RestaurantFragment : Fragment() {
@@ -29,6 +30,7 @@ class RestaurantFragment : Fragment() {
 
     private val navigationArgs: RestaurantFragmentArgs by navArgs()
     private val orderViewModel: OrderViewModel by activityViewModels()
+    private val menuViewModel: MenuViewModel by activityViewModels()
 
     private val rotateClockWise: Animation by lazy {
         AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_clock_wise)
@@ -69,12 +71,37 @@ class RestaurantFragment : Fragment() {
 
         val restaurantMenu = RestaurantMenuData.menuList.single {it.menuId == menuId}
         val categoryList = restaurantMenu.categoryList
+        menuViewModel.setMenuCategoryList(categoryList)
 
         binding.menuCategoryRv.apply {
-            adapter = ParentMenuTypesAdapter(requireContext(), categoryList, orderViewModel, restaurant.name) {
+            adapter = ParentMenuTypesAdapter(requireContext(), menuViewModel.getCategoryList(), orderViewModel, menuViewModel, restaurant.name) {
                 binding.viewCartCard.visibility = View.VISIBLE
             }
             ViewCompat.setNestedScrollingEnabled(binding.menuCategoryRv, false)
+        }
+
+        binding.vegChip.setOnClickListener {
+            if (binding.vegChip.isChecked){
+                menuViewModel.setVegFilter(true)
+                menuViewModel.setNonVegFilter(false)
+                binding.menuCategoryRv.adapter?.notifyDataSetChanged()
+            } else {
+                menuViewModel.setVegFilter(false)
+                menuViewModel.setNonVegFilter(false)
+                binding.menuCategoryRv.adapter?.notifyDataSetChanged()
+            }
+        }
+
+        binding.nonVegChip.setOnClickListener {
+            if (binding.nonVegChip.isChecked) {
+                menuViewModel.setNonVegFilter(true)
+                menuViewModel.setVegFilter(false)
+                binding.menuCategoryRv.adapter?.notifyDataSetChanged()
+            } else {
+                menuViewModel.setNonVegFilter(false)
+                menuViewModel.setVegFilter(false)
+                binding.menuCategoryRv.adapter?.notifyDataSetChanged()
+            }
         }
 
         orderViewModel.orderCartList.observe(viewLifecycleOwner) {

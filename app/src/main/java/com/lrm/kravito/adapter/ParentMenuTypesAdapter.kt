@@ -11,12 +11,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lrm.kravito.R
 import com.lrm.kravito.data.FoodItem
 import com.lrm.kravito.databinding.MenuCategoryListItemBinding
+import com.lrm.kravito.viewModel.MenuViewModel
 import com.lrm.kravito.viewModel.OrderViewModel
 
 class ParentMenuTypesAdapter(
     val context: Context,
     private val categoryList: List<FoodItem>,
     private val viewModel: OrderViewModel,
+    private val menuViewModel: MenuViewModel,
     private val restaurantName: String,
     private val onItemClicked: () -> Unit
 ) : RecyclerView.Adapter<ParentMenuTypesAdapter.CategoryViewHolder>() {
@@ -45,8 +47,10 @@ class ParentMenuTypesAdapter(
         fun bind(menuCategory: FoodItem) {
             binding.categoryName.text = menuCategory.itemCategory
 
+            menuViewModel.getItemsList(menuCategory)
+
             binding.itemsRv.apply {
-                adapter = ChildFoodItemsListAdapter(menuCategory.itemList, viewModel, restaurantName, context) {
+                adapter = ChildFoodItemsListAdapter(menuViewModel.itemsList.value!!.toList(), viewModel, restaurantName, context) {
                     onItemClicked()
                 }
                 ViewCompat.setNestedScrollingEnabled(binding.itemsRv, false)
@@ -54,7 +58,7 @@ class ParentMenuTypesAdapter(
             //Log.i(LOG_DATA, "ParentMenuTypesAdapter: Food Items List-> ${menuCategory.itemList} ")
 
             var isExpanded = false
-            binding.expandMenu.setOnClickListener {
+            binding.categoryCard.setOnClickListener {
                 isExpanded = !isExpanded
                 if (isExpanded) {
                     binding.itemsRv.visibility = View.GONE

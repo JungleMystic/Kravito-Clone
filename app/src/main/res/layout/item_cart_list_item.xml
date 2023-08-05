@@ -162,7 +162,7 @@
         android:layout_marginBottom="-3dp"
         android:layout_marginEnd="2dp"
         android:text="@string/currency_symbol"
-        android:textSize="18sp" />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/item_total_price"

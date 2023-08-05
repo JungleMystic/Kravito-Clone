@@ -46,19 +46,30 @@ class ItemCartFragment : Fragment() {
             }
         }
 
+        orderViewModel.totalCartValue.observe(viewLifecycleOwner) {newTotal ->
+            binding.totalTv.text = newTotal.toString()
+        }
+        orderViewModel.tax.observe(viewLifecycleOwner){newTax ->
+            binding.gstTv.text = newTax.toString()
+        }
+        orderViewModel.totalWithTax.observe(viewLifecycleOwner) {newGrandTotal->
+            binding.grandTotalTv.text = newGrandTotal.toString()
+        }
     }
 
-    fun checkIfCartIsEmpty(orderList: MutableList<OrderItem>) {
+    private fun checkIfCartIsEmpty(orderList: MutableList<OrderItem>) {
         Log.i(LOG_DATA, "ItemCartFragment: LiveData OrderItemList $orderList and its size: ${orderList.size}")
         if (orderList.isEmpty()) {
             binding.nestedSv.visibility = View.GONE
             binding.noItemsInCartTv.visibility = View.VISIBLE
             binding.placeOrderCard.visibility = View.GONE
+            binding.placeOrderButton.visibility = View.GONE
             orderViewModel.setRestaurantName("")
         } else {
             binding.nestedSv.visibility = View.VISIBLE
             binding.noItemsInCartTv.visibility = View.GONE
             binding.placeOrderCard.visibility = View.VISIBLE
+            binding.placeOrderButton.visibility = View.VISIBLE
             binding.restaurantName.text = orderViewModel.restaurantName.value
         }
     }

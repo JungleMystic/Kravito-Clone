@@ -72,4 +72,14 @@
     <string name="multiply_symbol">x</string>
     <string name="place_order">Place Order</string>
     <string name="no_items_in_the_cart">No items in the cart</string>
+    <string name="replace_cart_item">Replace Cart Item…?</string>
+    <string name="replace_cart_message">Your cart contains dishes from <![CDATA[<b>%1$s</b>]]>. Do you want to discard the selection and add dishes from <![CDATA[<b>%2$s</b>]]>…?</string>
+    <string name="cart_details">Cart Details</string>
+    <string name="bill_details">Bill Details</string>
+    <string name="item_total">Item Total</string>
+    <string name="delivery_fee">Delivery partner fee</string>
+    <string name="gst">GST</string>
+    <string name="grand_total">Grand Total</string>
+    <string name="veg">Veg</string>
+    <string name="non_veg">Non Veg</string>
 </resources>
