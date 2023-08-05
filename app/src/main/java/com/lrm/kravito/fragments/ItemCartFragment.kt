@@ -52,6 +52,12 @@ class ItemCartFragment : Fragment() {
         orderViewModel.tax.observe(viewLifecycleOwner){newTax ->
             binding.gstTv.text = newTax.toString()
         }
+        orderViewModel.deliveryFee.observe(viewLifecycleOwner) { newDeliveryFee ->
+            binding.deliveryFeeTv.text = newDeliveryFee.toString()
+        }
+        orderViewModel.deliveryTip.observe(viewLifecycleOwner) { newTip ->
+            binding.deliveryTipTv.text = newTip.toString()
+        }
         orderViewModel.totalWithTax.observe(viewLifecycleOwner) {newGrandTotal->
             binding.grandTotalTv.text = newGrandTotal.toString()
         }

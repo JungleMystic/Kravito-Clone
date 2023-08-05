@@ -210,7 +210,7 @@
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="20dp"
                             android:fontFamily="@font/text_font_regular"
-                            android:text="@string/item_total"
+                            android:text="@string/subtotal"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textStyle="bold"
@@ -234,7 +234,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="20dp"
-                            android:fontFamily="@font/text_font_bold"
+                            android:fontFamily="@font/text_font_regular"
+                            android:textStyle="bold"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="@id/total_title"
@@ -251,7 +252,7 @@
                             android:fontFamily="@font/text_font_regular"
                             android:text="@string/gst"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/total_title" />
@@ -263,7 +264,7 @@
                             android:layout_marginEnd="2dp"
                             android:layout_marginBottom="-3dp"
                             android:text="@string/currency_symbol"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             app:layout_constraintBottom_toBottomOf="@id/gst_tv"
                             app:layout_constraintEnd_toStartOf="@id/gst_tv"
                             app:layout_constraintTop_toTopOf="@id/gst_tv" />
@@ -273,9 +274,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="20dp"
-                            android:fontFamily="@font/text_font_bold"
+                            android:fontFamily="@font/text_font_regular"
+                            android:textStyle="bold"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             app:layout_constraintBottom_toBottomOf="@id/gst_title"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@id/gst_title"
@@ -290,7 +292,7 @@
                             android:fontFamily="@font/text_font_regular"
                             android:text="@string/delivery_fee"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/gst_title" />
@@ -302,7 +304,7 @@
                             android:layout_marginEnd="2dp"
                             android:layout_marginBottom="-3dp"
                             android:text="@string/currency_symbol"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             app:layout_constraintBottom_toBottomOf="@id/delivery_fee_tv"
                             app:layout_constraintEnd_toStartOf="@id/delivery_fee_tv"
                             app:layout_constraintTop_toTopOf="@id/delivery_fee_tv" />
@@ -312,13 +314,55 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="20dp"
-                            android:fontFamily="@font/text_font_bold"
+                            android:fontFamily="@font/text_font_regular"
+                            android:textStyle="bold"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             app:layout_constraintBottom_toBottomOf="@id/delivery_title"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@id/delivery_title"
-                            tools:text="640" />
+                            tools:text="25" />
+
+                        <TextView
+                            android:id="@+id/delivery_tip_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="20dp"
+                            android:fontFamily="@font/text_font_regular"
+                            android:textStyle="bold"
+                            android:text="@string/delivery_tip_text"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/delivery_title" />
+
+                        <TextView
+                            android:id="@+id/currency_symbol_tip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="2dp"
+                            android:layout_marginBottom="-3dp"
+                            android:text="@string/currency_symbol"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="@id/delivery_tip_tv"
+                            app:layout_constraintEnd_toStartOf="@id/delivery_tip_tv"
+                            app:layout_constraintTop_toTopOf="@id/delivery_tip_tv" />
+
+                        <TextView
+                            android:id="@+id/delivery_tip_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="20dp"
+                            android:fontFamily="@font/text_font_regular"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="@id/delivery_tip_title"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/delivery_tip_title"
+                            tools:text="30" />
 
                         <TextView
                             android:id="@+id/grand_total_title"
@@ -333,7 +377,7 @@
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/delivery_title" />
+                            app:layout_constraintTop_toBottomOf="@id/delivery_tip_title" />
 
                         <TextView
                             android:id="@+id/currency_symbol_gt"
@@ -358,12 +402,11 @@
                             app:layout_constraintBottom_toBottomOf="@id/grand_total_title"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@id/grand_total_title"
-                            tools:text="640" />
+                            tools:text="695"/>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </com.google.android.material.card.MaterialCardView>
-
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -372,7 +415,7 @@
         <View
             android:id="@+id/place_order_card"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="60dp"
             android:background="@drawable/view_cart_bg_shape"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"

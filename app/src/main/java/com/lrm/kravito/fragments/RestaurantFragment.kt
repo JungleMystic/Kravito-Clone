@@ -76,6 +76,7 @@ class RestaurantFragment : Fragment() {
         binding.menuCategoryRv.apply {
             adapter = ParentMenuTypesAdapter(requireContext(), menuViewModel.getCategoryList(), orderViewModel, menuViewModel, restaurant.name) {
                 binding.viewCartCard.visibility = View.VISIBLE
+                binding.viewCartButton.visibility = View.VISIBLE
             }
             ViewCompat.setNestedScrollingEnabled(binding.menuCategoryRv, false)
         }
@@ -107,6 +108,7 @@ class RestaurantFragment : Fragment() {
         orderViewModel.orderCartList.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 binding.viewCartCard.visibility = View.VISIBLE
+                binding.viewCartButton.visibility = View.VISIBLE
             }
         }
 
