@@ -93,4 +93,5 @@
     <string name="directions_to_reach">Directions to reach</string>
     <string name="avoid_calling">Avoid calling</string>
     <string name="leave_with_security">Leave with security</string>
+    <string name="items_added">Items Added: </string>
 </resources>

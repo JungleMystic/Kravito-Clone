@@ -117,6 +117,10 @@ class ItemCartFragment : Fragment() {
             orderViewModel.setDeliveryInstruction(getString(R.string.leave_with_security))
         }
 
+        binding.viewDetailBill.setOnClickListener {
+            binding.nestedSv.scrollTo(0, binding.billDetailsTitle.bottom)
+        }
+
     }
 
     private fun checkIfCartIsEmpty(orderList: MutableList<OrderItem>) {

@@ -109,7 +109,12 @@ class RestaurantFragment : Fragment() {
             if (it.isNotEmpty()) {
                 binding.viewCartCard.visibility = View.VISIBLE
                 binding.viewCartButton.visibility = View.VISIBLE
+                binding.itemsCount.text = it.size.toString()
             }
+        }
+
+        orderViewModel.cartSize.observe(viewLifecycleOwner) {
+            binding.itemsCount.text = it.toString()
         }
 
         binding.shortMenuRv.apply {

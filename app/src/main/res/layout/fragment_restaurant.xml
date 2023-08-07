@@ -396,20 +396,49 @@
             app:layout_constraintBottom_toBottomOf="parent"
             tools:visibility="visible"/>
 
-            <Button
+        <TextView
+            android:id="@+id/items_added_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/view_cart_card"
+            app:layout_constraintBottom_toBottomOf="@id/view_cart_card"
+            app:layout_constraintStart_toStartOf="@id/view_cart_card"
+            android:layout_marginStart="30dp"
+            android:text="@string/items_added"
+            android:textSize="14sp"
+            android:fontFamily="@font/text_font_regular"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/items_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/view_cart_card"
+            app:layout_constraintBottom_toBottomOf="@id/view_cart_card"
+            app:layout_constraintStart_toEndOf="@id/items_added_title"
+            android:layout_marginStart="10dp"
+            tools:text="10"
+            android:textSize="14sp"
+            android:fontFamily="@font/text_font_bold"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+
+        <Button
                 android:id="@+id/view_cart_button"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"
                 android:text="@string/view_cart"
                 android:textColor="@color/white"
-                android:textSize="16sp"
                 android:fontFamily="@font/text_font_bold"
                 android:backgroundTint="@color/green"
                 android:layout_gravity="center"
                 app:layout_constraintTop_toTopOf="@id/view_cart_card"
                 app:layout_constraintBottom_toBottomOf="@id/view_cart_card"
+                app:layout_constraintEnd_toEndOf="@id/view_cart_card"
+                android:scaleX="0.9"
+                android:scaleY="0.9"
                 android:visibility="gone"
                 tools:visibility="visible" />
 

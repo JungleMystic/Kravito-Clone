@@ -19,6 +19,9 @@ class OrderViewModel: ViewModel() {
     private val _orderCartList = MutableLiveData<MutableList<OrderItem>>(mutableListOf())
     val orderCartList: LiveData<MutableList<OrderItem>> get() = _orderCartList
 
+    private val _cartSize = MutableLiveData<Int>(0)
+    val cartSize: LiveData<Int> get() = _cartSize
+
     private val _restaurantName = MutableLiveData<String>("")
     val restaurantName: LiveData<String> get() = _restaurantName
 
@@ -53,6 +56,7 @@ class OrderViewModel: ViewModel() {
         val oldRestaurantName = restaurantName.value!!
         if (oldRestaurantName == name) {
             _orderCartList.value?.add(orderItem)
+            _cartSize.value = _orderCartList.value?.size
             Log.i(TAG, "addToCart is called -> oldName: $oldRestaurantName and newName: $name")
         } else {
             val dialog = Dialog(context)
@@ -103,6 +107,7 @@ class OrderViewModel: ViewModel() {
             Log.i(TAG, "decreaseCartSize removed cartItem -> $cartItem")
             _orderCartList.value!!.removeAt(position)
             _orderCartList.value = orderCartList.value
+            _cartSize.value = orderCartList.value?.size
         }
         calculateTotalAndTax()
     }
