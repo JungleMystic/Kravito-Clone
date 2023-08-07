@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.lrm.kravito.R
 import com.lrm.kravito.adapter.ItemCartAdapter
 import com.lrm.kravito.constants.LOG_DATA
 import com.lrm.kravito.data.OrderItem
@@ -52,15 +53,70 @@ class ItemCartFragment : Fragment() {
         orderViewModel.tax.observe(viewLifecycleOwner){newTax ->
             binding.gstTv.text = newTax.toString()
         }
-        orderViewModel.deliveryFee.observe(viewLifecycleOwner) { newDeliveryFee ->
+        orderViewModel.deliveryFee.observe(viewLifecycleOwner) {newDeliveryFee ->
             binding.deliveryFeeTv.text = newDeliveryFee.toString()
         }
-        orderViewModel.deliveryTip.observe(viewLifecycleOwner) { newTip ->
+        orderViewModel.deliveryTip.observe(viewLifecycleOwner) {newTip ->
             binding.deliveryTipTv.text = newTip.toString()
         }
         orderViewModel.totalWithTax.observe(viewLifecycleOwner) {newGrandTotal->
             binding.grandTotalTv.text = newGrandTotal.toString()
+            binding.summaryTotal.text = newGrandTotal.toString()
         }
+
+        binding.chip20.setOnClickListener {
+            if (binding.chip20.isChecked) {
+                orderViewModel.setDeliveryTip(20)
+            } else {
+                orderViewModel.setDeliveryTip(0)
+            }
+        }
+
+        binding.chip30.setOnClickListener {
+            if (binding.chip30.isChecked) {
+                orderViewModel.setDeliveryTip(30)
+            } else {
+                orderViewModel.setDeliveryTip(0)
+            }
+        }
+
+        binding.chip40.setOnClickListener {
+            if (binding.chip40.isChecked) {
+                orderViewModel.setDeliveryTip(40)
+            } else {
+                orderViewModel.setDeliveryTip(0)
+            }
+        }
+
+        binding.chip50.setOnClickListener {
+            if (binding.chip50.isChecked) {
+                orderViewModel.setDeliveryTip(50)
+            } else {
+                orderViewModel.setDeliveryTip(0)
+            }
+        }
+
+        binding.avoidRing.setOnClickListener {
+            binding.avoidRing.isChecked = !binding.avoidRing.isChecked
+            orderViewModel.setDeliveryInstruction(getString(R.string.avoid_ringing_bell))
+        }
+        binding.leaveAtDoor.setOnClickListener {
+            binding.leaveAtDoor.isChecked = !binding.leaveAtDoor.isChecked
+            orderViewModel.setDeliveryInstruction(getString(R.string.leave_at_the_door))
+        }
+        binding.directionsToReach.setOnClickListener {
+            binding.directionsToReach.isChecked = !binding.directionsToReach.isChecked
+            orderViewModel.setDeliveryInstruction(getString(R.string.directions_to_reach))
+        }
+        binding.avoidCalling.setOnClickListener {
+            binding.avoidCalling.isChecked = !binding.avoidCalling.isChecked
+            orderViewModel.setDeliveryInstruction(getString(R.string.avoid_calling))
+        }
+        binding.leaveWithSecurity.setOnClickListener {
+            binding.leaveWithSecurity.isChecked = !binding.leaveWithSecurity.isChecked
+            orderViewModel.setDeliveryInstruction(getString(R.string.leave_with_security))
+        }
+
     }
 
     private fun checkIfCartIsEmpty(orderList: MutableList<OrderItem>) {
@@ -69,13 +125,15 @@ class ItemCartFragment : Fragment() {
             binding.nestedSv.visibility = View.GONE
             binding.noItemsInCartTv.visibility = View.VISIBLE
             binding.placeOrderCard.visibility = View.GONE
-            binding.placeOrderButton.visibility = View.GONE
+            binding.proceedToPayButton.visibility = View.GONE
+            binding.viewDetailBill.visibility = View.GONE
             orderViewModel.setRestaurantName("")
         } else {
             binding.nestedSv.visibility = View.VISIBLE
             binding.noItemsInCartTv.visibility = View.GONE
             binding.placeOrderCard.visibility = View.VISIBLE
-            binding.placeOrderButton.visibility = View.VISIBLE
+            binding.proceedToPayButton.visibility = View.VISIBLE
+            binding.viewDetailBill.visibility = View.VISIBLE
             binding.restaurantName.text = orderViewModel.restaurantName.value
         }
     }

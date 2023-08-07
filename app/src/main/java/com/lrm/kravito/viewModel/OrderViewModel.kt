@@ -34,6 +34,9 @@ class OrderViewModel: ViewModel() {
     private val _deliveryTip = MutableLiveData<Int>(0)
     val deliveryTip: LiveData<Int> get() = _deliveryTip
 
+    private val _deliveryInstruction = MutableLiveData<String>("")
+    val deliveryInstruction: LiveData<String> get() = _deliveryInstruction
+
     private val _totalWithTax = MutableLiveData<Int>()
     val totalWithTax: LiveData<Int> get() = _totalWithTax
 
@@ -113,5 +116,14 @@ class OrderViewModel: ViewModel() {
         val tax = (total * 0.12).toInt()
         _tax.value = tax
         _totalWithTax.value = total + tax + deliveryFee.value!! + deliveryTip.value!!
+    }
+
+    fun setDeliveryTip(tipAmount: Int){
+        _deliveryTip.value = tipAmount
+        calculateTotalAndTax()
+    }
+
+    fun setDeliveryInstruction(instruction: String) {
+        _deliveryInstruction.value = instruction
     }
 }

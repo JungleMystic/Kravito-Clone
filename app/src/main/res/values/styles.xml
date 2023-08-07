@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ChipTextAppearance" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/text_font_regular</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>

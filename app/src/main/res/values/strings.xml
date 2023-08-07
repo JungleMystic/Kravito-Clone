@@ -77,10 +77,20 @@
     <string name="cart_details">Cart Details</string>
     <string name="bill_details">Bill Details</string>
     <string name="subtotal">Subtotal</string>
-    <string name="delivery_fee">Delivery partner fee</string>
+    <string name="delivery_fee">Delivery Partner Fee</string>
     <string name="gst">GST</string>
     <string name="grand_total">Grand Total</string>
     <string name="veg">Veg</string>
     <string name="non_veg">Non Veg</string>
-    <string name="delivery_tip_text">Tip for your delivery partner</string>
+    <string name="delivery_tip_text">Tip your delivery partner</string>
+    <string name="delivery_tip_text2">Delivery Tip</string>
+    <string name="delivery_tip_desc">Thank your delivery partner by leaving them a tip. 100% of the tip will go to your delivery partner.</string>
+    <string name="delivery_instructions">Delivery Instructions</string>
+    <string name="view_detailed_bill">View Detailed Bill</string>
+    <string name="proceed_to_pay">Proceed to Pay</string>
+    <string name="avoid_ringing_bell">Avoid ringing bell</string>
+    <string name="leave_at_the_door">Leave at the Door</string>
+    <string name="directions_to_reach">Directions to reach</string>
+    <string name="avoid_calling">Avoid calling</string>
+    <string name="leave_with_security">Leave with security</string>
 </resources>

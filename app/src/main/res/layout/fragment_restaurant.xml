@@ -409,7 +409,9 @@
                 android:backgroundTint="@color/green"
                 android:layout_gravity="center"
                 app:layout_constraintTop_toTopOf="@id/view_cart_card"
-                app:layout_constraintBottom_toBottomOf="@id/view_cart_card" />
+                app:layout_constraintBottom_toBottomOf="@id/view_cart_card"
+                android:visibility="gone"
+                tools:visibility="visible" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/menu_fab"
