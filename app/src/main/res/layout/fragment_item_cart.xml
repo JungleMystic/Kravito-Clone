@@ -548,13 +548,13 @@
                     app:layout_constraintTop_toBottomOf="@id/delivery_instruction_title" />
 
                 <HorizontalScrollView
+                    android:id="@+id/delivery_instruction_hsv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/delivery_instruction_title"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     android:paddingBottom="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp">
+                    android:scrollbars="none">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -563,13 +563,13 @@
 
                         <FrameLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp">
 
                             <com.google.android.material.card.MaterialCardView
                                 android:id="@+id/avoid_ring"
                                 android:layout_width="100dp"
                                 android:layout_height="120dp"
-                                android:layout_marginStart="10dp"
                                 android:padding="10dp"
                                 app:cardForegroundColor="@color/card_bg_color"
                                 app:strokeColor="@color/card_stroke_color"
@@ -595,13 +595,13 @@
 
                         <FrameLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp">
 
                             <com.google.android.material.card.MaterialCardView
                                 android:id="@+id/leave_at_door"
                                 android:layout_width="100dp"
                                 android:layout_height="120dp"
-                                android:layout_marginStart="10dp"
                                 app:cardForegroundColor="@color/card_bg_color"
                                 app:strokeColor="@color/card_stroke_color"
                                 app:strokeWidth="1dp"
@@ -621,19 +621,21 @@
                                     android:text="@string/leave_at_the_door"
                                     android:textColor="@color/black"
                                     android:textSize="14sp"
-                                    android:textStyle="bold" />
+                                    android:textStyle="bold"
+                                    android:importantForAccessibility="@null"
+                                    android:contentDescription="@null"/>
 
                         </FrameLayout>
 
                         <FrameLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp">
 
                             <com.google.android.material.card.MaterialCardView
                                 android:id="@+id/directions_to_reach"
                                 android:layout_width="100dp"
                                 android:layout_height="120dp"
-                                android:layout_marginStart="10dp"
                                 app:cardForegroundColor="@color/card_bg_color"
                                 app:strokeColor="@color/card_stroke_color"
                                 app:strokeWidth="1dp"
@@ -660,12 +662,13 @@
 
                         <FrameLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp">
+
                             <com.google.android.material.card.MaterialCardView
                                 android:id="@+id/avoid_calling"
                                 android:layout_width="100dp"
                                 android:layout_height="120dp"
-                                android:layout_marginStart="10dp"
                                 app:cardForegroundColor="@color/card_bg_color"
                                 app:strokeColor="@color/card_stroke_color"
                                 app:strokeWidth="1dp"
@@ -691,14 +694,14 @@
 
                         <FrameLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp">
 
                             <com.google.android.material.card.MaterialCardView
                                 android:id="@+id/leave_with_security"
                                 android:layout_width="100dp"
                                 android:layout_height="120dp"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginEnd="10dp"
                                 app:strokeColor="@color/card_stroke_color"
                                 app:cardForegroundColor="@color/card_bg_color"
                                 app:strokeWidth="1dp"
@@ -719,6 +722,211 @@
                                     android:textColor="@color/black"
                                     android:textSize="14sp"
                                     android:textStyle="bold" />
+
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                </HorizontalScrollView>
+
+                <TextView
+                    android:id="@+id/special_delivery_instruction_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/text_font_bold"
+                    android:text="@string/special_delivery_instructions"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/delivery_instruction_hsv" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:background="@color/pink"
+                    app:layout_constraintEnd_toEndOf="@id/special_delivery_instruction_title"
+                    app:layout_constraintStart_toStartOf="@id/special_delivery_instruction_title"
+                    app:layout_constraintTop_toBottomOf="@id/special_delivery_instruction_title" />
+
+                <HorizontalScrollView
+                    android:id="@+id/special_delivery_instruction_hsv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/special_delivery_instruction_title"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:paddingBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/surprise_to_child"
+                                android:layout_width="100dp"
+                                android:layout_height="120dp"
+                                android:padding="10dp"
+                                app:cardForegroundColor="@color/card_bg_color"
+                                app:strokeColor="@color/card_stroke_color"
+                                app:strokeWidth="1dp"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:checkable="true"
+                                app:checkedIcon="@null"/>
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:layout_margin="10dp"
+                                android:fontFamily="@font/text_font_regular"
+                                android:text="@string/surprise_to_my_child"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:textStyle="bold"/>
+
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/surprise_to_wife"
+                                android:layout_width="100dp"
+                                android:layout_height="120dp"
+                                app:cardForegroundColor="@color/card_bg_color"
+                                app:strokeColor="@color/card_stroke_color"
+                                app:strokeWidth="1dp"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:checkable="true"
+                                app:checkedIcon="@null"
+                                android:padding="10dp"/>
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:layout_margin="10dp"
+                                android:fontFamily="@font/text_font_regular"
+                                android:text="@string/surprise_to_my_wife"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/surprise_to_brother"
+                                android:layout_width="100dp"
+                                android:layout_height="120dp"
+                                app:cardForegroundColor="@color/card_bg_color"
+                                app:strokeColor="@color/card_stroke_color"
+                                app:strokeWidth="1dp"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:checkable="true"
+                                android:checked="true"
+                                app:checkedIcon="@null"
+                                android:padding="10dp"/>
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:layout_margin="10dp"
+                                android:fontFamily="@font/text_font_regular"
+                                android:text="@string/surprise_to_my_brother"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/surprise_to_parents"
+                                android:layout_width="100dp"
+                                android:layout_height="120dp"
+                                app:cardForegroundColor="@color/card_bg_color"
+                                app:strokeColor="@color/card_stroke_color"
+                                app:strokeWidth="1dp"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:checkable="true"
+                                app:checkedIcon="@null"
+                                android:padding="10dp"/>
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:layout_margin="10dp"
+                                android:fontFamily="@font/text_font_regular"
+                                android:text="@string/surprise_to_my_parents"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/surprise_to_loved_one"
+                                android:layout_width="100dp"
+                                android:layout_height="120dp"
+                                app:strokeColor="@color/card_stroke_color"
+                                app:cardForegroundColor="@color/card_bg_color"
+                                app:strokeWidth="1dp"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:checkable="true"
+                                app:checkedIcon="@null"
+                                android:padding="10dp"/>
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:layout_margin="10dp"
+                                android:fontFamily="@font/text_font_regular"
+                                android:text="@string/surprise_to_my_loved_one"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
 
                         </FrameLayout>
 
@@ -758,7 +966,7 @@
             app:layout_constraintTop_toTopOf="@id/place_order_card"
             app:layout_constraintStart_toStartOf="@id/place_order_card"
             android:layout_marginTop="20dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="40dp"
             tools:text="695"
             android:textColor="@color/black"
             android:textSize="16sp"

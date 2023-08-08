@@ -37,11 +37,17 @@ class OrderViewModel: ViewModel() {
     private val _deliveryTip = MutableLiveData<Int>(0)
     val deliveryTip: LiveData<Int> get() = _deliveryTip
 
-    private val _deliveryInstruction = MutableLiveData<String>("")
-    val deliveryInstruction: LiveData<String> get() = _deliveryInstruction
+    private val _deliveryInstruction = MutableLiveData<MutableList<String>>(mutableListOf())
+    val deliveryInstruction: LiveData<MutableList<String>> get() = _deliveryInstruction
+
+    private val _specialDeliveryInstructions = MutableLiveData<MutableList<String>>(mutableListOf())
+    val specialDeliveryInstructions: LiveData<MutableList<String>> get() = _specialDeliveryInstructions
 
     private val _totalWithTax = MutableLiveData<Int>()
     val totalWithTax: LiveData<Int> get() = _totalWithTax
+
+    private val _modeOfPayment = MutableLiveData<String>()
+    val modeOfPayment: LiveData<String> get() = _modeOfPayment
 
     fun setRestaurantName(name: String) {
         val oldRestaurantName = restaurantName.value!!
@@ -129,6 +135,36 @@ class OrderViewModel: ViewModel() {
     }
 
     fun setDeliveryInstruction(instruction: String) {
-        _deliveryInstruction.value = instruction
+        _deliveryInstruction.value?.add(instruction)
+    }
+
+    fun removeDeliveryInstruction(instruction: String) {
+        val iterator = _deliveryInstruction.value!!.iterator()
+        while (iterator.hasNext()) {
+            val string = iterator.next()
+            if (string == instruction) {
+                iterator.remove()
+            }
+        }
+        Log.i(TAG, "removedDeliveryInstruction  instructionsList-> ${_deliveryInstruction.value}")
+    }
+
+    fun setSpecialDeliveryInstruction(instruction: String) {
+        _specialDeliveryInstructions.value?.add(instruction)
+    }
+
+    fun removeSpecialDeliveryInstruction(instruction: String) {
+        val iterator = _specialDeliveryInstructions.value!!.iterator()
+        while (iterator.hasNext()) {
+            val string = iterator.next()
+            if (string == instruction) {
+                iterator.remove()
+            }
+        }
+        Log.i(TAG, "removedDeliveryInstruction  instructionsList-> ${_specialDeliveryInstructions.value}")
+    }
+
+    fun setModeOfPayment(mode: String) {
+        _modeOfPayment.value = mode
     }
 }

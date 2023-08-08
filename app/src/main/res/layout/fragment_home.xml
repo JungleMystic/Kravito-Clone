@@ -151,7 +151,7 @@
                 android:layout_marginEnd="10dp"
                 tools:listitem="@layout/food_icon_item_view"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:scrollbars="horizontal"/>
+                android:scrollbars="none"/>
 
             <TextView
                 android:id="@+id/near_restaurants_title"

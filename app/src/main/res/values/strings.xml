@@ -93,5 +93,18 @@
     <string name="directions_to_reach">Directions to reach</string>
     <string name="avoid_calling">Avoid calling</string>
     <string name="leave_with_security">Leave with security</string>
-    <string name="items_added">Items Added: </string>
+    <string name="items_added">Items Added : </string>
+    <string name="special_delivery_instructions">Special Delivery Instructions</string>
+    <string name="surprise_to_my_child">Surprise to my child</string>
+    <string name="surprise_to_my_wife">Surprise to my wife</string>
+    <string name="surprise_to_my_brother">Surprise to my brother</string>
+    <string name="surprise_to_my_parents">Surprise to my parents</string>
+    <string name="surprise_to_my_loved_one">Surprise to my loved one</string>
+    <string name="order_summary">Order Summary</string>
+    <string name="order_total">Order Total : </string>
+    <string name="order_from">Order From</string>
+    <string name="order_to">Order To</string>
+    <string name="payment_options">Payment Options</string>
+    <string name="cash_on_delivery_cod">Cash on Delivery (COD)</string>
+    <string name="phonepe">PhonePe</string>
 </resources>

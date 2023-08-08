@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.OrderSummaryFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/back_icon"
+                    android:layout_width="40dp"
+                    android:layout_height="25dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_back_icon"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="@color/light_grey" />
+
+                <TextView
+                    android:id="@+id/fragment_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="2dp"
+                    android:fontFamily="@font/text_font_bold"
+                    android:gravity="center_vertical"
+                    android:text="@string/order_summary"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/back_icon"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="-5dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/pink"
+        app:layout_constraintTop_toBottomOf="@id/app_bar" />
+
+    <TextView
+        android:id="@+id/order_total_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/order_total"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:fontFamily="@font/text_font_bold"
+        app:layout_constraintTop_toBottomOf="@id/app_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"/>
+
+    <TextView
+        android:id="@+id/currency_symbol_gt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="-3dp"
+        android:text="@string/currency_symbol"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/grand_total_tv"
+        app:layout_constraintEnd_toStartOf="@id/grand_total_tv"
+        app:layout_constraintTop_toTopOf="@id/grand_total_tv" />
+
+    <TextView
+        android:id="@+id/grand_total_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/text_font_bold"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/order_total_title"
+        app:layout_constraintStart_toEndOf="@id/order_total_title"
+        app:layout_constraintTop_toTopOf="@id/order_total_title"
+        tools:text="695"/>
+
+    <TextView
+        android:id="@+id/order_from"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/text_font_bold"
+        android:text="@string/order_from"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/order_total_title" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:background="@color/pink"
+        app:layout_constraintEnd_toEndOf="@id/order_from"
+        app:layout_constraintStart_toStartOf="@id/order_from"
+        app:layout_constraintTop_toBottomOf="@id/order_from" />
+
+    <TextView
+        android:id="@+id/restaurant_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Maha's Cuisine"
+        android:textSize="16sp"
+        android:fontFamily="@font/text_font_regular"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/order_from"
+        app:layout_constraintStart_toStartOf="@id/order_from"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/restaurant_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="Maha's Cuisine"
+        android:textSize="14sp"
+        android:fontFamily="@font/text_font_regular"
+        android:textColor="@color/black"
+        android:maxLines="2"
+        android:ellipsize="end"
+        app:layout_constraintTop_toBottomOf="@id/restaurant_name"
+        app:layout_constraintStart_toStartOf="@id/restaurant_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:id="@+id/order_to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/text_font_bold"
+        android:text="@string/order_to"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/restaurant_address" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:background="@color/pink"
+        app:layout_constraintEnd_toEndOf="@id/order_to"
+        app:layout_constraintStart_toStartOf="@id/order_to"
+        app:layout_constraintTop_toBottomOf="@id/order_to" />
+
+    <TextView
+        android:id="@+id/your_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Rammohan"
+        android:textSize="16sp"
+        android:fontFamily="@font/text_font_regular"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/order_to"
+        app:layout_constraintStart_toStartOf="@id/order_to"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/your_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="Maha's Cuisine"
+        android:textSize="14sp"
+        android:fontFamily="@font/text_font_regular"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="20dp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        app:layout_constraintTop_toBottomOf="@id/your_name"
+        app:layout_constraintStart_toStartOf="@id/your_name"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:id="@+id/payment_options_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/text_font_bold"
+        android:text="@string/payment_options"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/your_address" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:background="@color/pink"
+        app:layout_constraintEnd_toEndOf="@id/payment_options_title"
+        app:layout_constraintStart_toStartOf="@id/payment_options_title"
+        app:layout_constraintTop_toBottomOf="@id/payment_options_title" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cod_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/payment_options_title"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
+
+        <RadioGroup
+            android:id="@+id/payment_options"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/cod"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                app:buttonTint="@color/pink"
+                android:text="@string/cash_on_delivery_cod"
+                android:fontFamily="@font/text_font_regular"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:paddingStart="10dp"
+                android:paddingEnd="1dp"/>
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/phonepe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                app:buttonTint="@color/pink"
+                android:text="@string/phonepe"
+                android:fontFamily="@font/text_font_regular"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:paddingStart="10dp"
+                android:paddingEnd="1dp"/>
+
+        </RadioGroup>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <View
+        android:id="@+id/place_order_card"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/view_cart_bg_shape"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:visibility="visible"/>
+
+    <Button
+        android:id="@+id/place_order_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginEnd="20dp"
+        android:backgroundTint="@color/green"
+        android:fontFamily="@font/text_font_bold"
+        android:text="@string/place_order"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:scaleX="0.9"
+        android:scaleY="0.9"
+        app:layout_constraintTop_toTopOf="@id/place_order_card"
+        app:layout_constraintBottom_toBottomOf="@id/place_order_card"
+        app:layout_constraintEnd_toEndOf="@id/place_order_card"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

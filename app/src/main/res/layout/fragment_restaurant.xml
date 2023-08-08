@@ -390,7 +390,7 @@
         <View
             android:id="@+id/view_cart_card"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="70dp"
             android:background="@drawable/view_cart_bg_shape"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -437,8 +437,6 @@
                 app:layout_constraintTop_toTopOf="@id/view_cart_card"
                 app:layout_constraintBottom_toBottomOf="@id/view_cart_card"
                 app:layout_constraintEnd_toEndOf="@id/view_cart_card"
-                android:scaleX="0.9"
-                android:scaleY="0.9"
                 android:visibility="gone"
                 tools:visibility="visible" />
 

@@ -98,29 +98,94 @@ class ItemCartFragment : Fragment() {
 
         binding.avoidRing.setOnClickListener {
             binding.avoidRing.isChecked = !binding.avoidRing.isChecked
-            orderViewModel.setDeliveryInstruction(getString(R.string.avoid_ringing_bell))
+            if (binding.avoidRing.isChecked) {
+                orderViewModel.setDeliveryInstruction(getString(R.string.avoid_ringing_bell))
+            } else {
+                orderViewModel.removeDeliveryInstruction(getString(R.string.avoid_ringing_bell))
+            }
         }
         binding.leaveAtDoor.setOnClickListener {
             binding.leaveAtDoor.isChecked = !binding.leaveAtDoor.isChecked
-            orderViewModel.setDeliveryInstruction(getString(R.string.leave_at_the_door))
+            if (binding.leaveAtDoor.isChecked) {
+                orderViewModel.setDeliveryInstruction(getString(R.string.leave_at_the_door))
+            } else {
+                orderViewModel.removeDeliveryInstruction(getString(R.string.leave_at_the_door))
+            }
         }
         binding.directionsToReach.setOnClickListener {
             binding.directionsToReach.isChecked = !binding.directionsToReach.isChecked
-            orderViewModel.setDeliveryInstruction(getString(R.string.directions_to_reach))
+            if (binding.directionsToReach.isChecked) {
+                orderViewModel.setDeliveryInstruction(getString(R.string.directions_to_reach))
+            } else {
+                orderViewModel.removeDeliveryInstruction(getString(R.string.directions_to_reach))
+            }
         }
         binding.avoidCalling.setOnClickListener {
             binding.avoidCalling.isChecked = !binding.avoidCalling.isChecked
-            orderViewModel.setDeliveryInstruction(getString(R.string.avoid_calling))
+            if (binding.avoidCalling.isChecked) {
+                orderViewModel.setDeliveryInstruction(getString(R.string.avoid_calling))
+            } else {
+                orderViewModel.removeDeliveryInstruction(getString(R.string.avoid_calling))
+            }
         }
         binding.leaveWithSecurity.setOnClickListener {
             binding.leaveWithSecurity.isChecked = !binding.leaveWithSecurity.isChecked
-            orderViewModel.setDeliveryInstruction(getString(R.string.leave_with_security))
+            if (binding.leaveWithSecurity.isChecked) {
+                orderViewModel.setDeliveryInstruction(getString(R.string.leave_with_security))
+            } else {
+                orderViewModel.removeDeliveryInstruction(getString(R.string.leave_with_security))
+            }
         }
 
         binding.viewDetailBill.setOnClickListener {
             binding.nestedSv.scrollTo(0, binding.billDetailsTitle.bottom)
         }
 
+        binding.surpriseToBrother.setOnClickListener {
+            binding.surpriseToBrother.isChecked = !binding.surpriseToBrother.isChecked
+            if (binding.surpriseToBrother.isChecked) {
+                orderViewModel.setSpecialDeliveryInstruction(getString(R.string.surprise_to_my_brother))
+            } else {
+                orderViewModel.removeSpecialDeliveryInstruction(getString(R.string.surprise_to_my_brother))
+            }
+        }
+        binding.surpriseToParents.setOnClickListener {
+            binding.surpriseToParents.isChecked = !binding.surpriseToParents.isChecked
+            if (binding.surpriseToParents.isChecked) {
+                orderViewModel.setSpecialDeliveryInstruction(getString(R.string.surprise_to_my_parents))
+            } else {
+                orderViewModel.removeSpecialDeliveryInstruction(getString(R.string.surprise_to_my_parents))
+            }
+        }
+        binding.surpriseToWife.setOnClickListener {
+            binding.surpriseToWife.isChecked = !binding.surpriseToWife.isChecked
+            if (binding.surpriseToWife.isChecked) {
+                orderViewModel.setSpecialDeliveryInstruction(getString(R.string.surprise_to_my_wife))
+            } else {
+                orderViewModel.removeSpecialDeliveryInstruction(getString(R.string.surprise_to_my_wife))
+            }
+        }
+        binding.surpriseToLovedOne.setOnClickListener {
+            binding.surpriseToLovedOne.isChecked = !binding.surpriseToLovedOne.isChecked
+            if (binding.surpriseToLovedOne.isChecked) {
+                orderViewModel.setSpecialDeliveryInstruction(getString(R.string.surprise_to_my_loved_one))
+            } else {
+                orderViewModel.removeSpecialDeliveryInstruction(getString(R.string.surprise_to_my_loved_one))
+            }
+        }
+        binding.surpriseToChild.setOnClickListener {
+            binding.surpriseToChild.isChecked = !binding.surpriseToChild.isChecked
+            if (binding.surpriseToChild.isChecked) {
+                orderViewModel.setSpecialDeliveryInstruction(getString(R.string.surprise_to_my_child))
+            } else {
+                orderViewModel.removeSpecialDeliveryInstruction(getString(R.string.surprise_to_my_child))
+            }
+        }
+
+        binding.proceedToPayButton.setOnClickListener {
+            val action = ItemCartFragmentDirections.actionItemCartFragmentToOrderSummaryFragment()
+            this.findNavController().navigate(action)
+        }
     }
 
     private fun checkIfCartIsEmpty(orderList: MutableList<OrderItem>) {
