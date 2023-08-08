@@ -101,7 +101,7 @@ class HomeFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         Handler(Looper.myLooper()!!).postDelayed({
             if (profileViewModel.userLocation.value == "Loading Location...") {
                 if (hasPermissions()) {
-                    //getLocation()
+                    getLocation()
                 }
             }
         }, 4000)
